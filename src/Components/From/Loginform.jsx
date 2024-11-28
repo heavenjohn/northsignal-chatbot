@@ -1,10 +1,8 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { auth, googleProvider } from "../Firebase/firebaseConfig";
-import { signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { auth} from "../Firebase/firebaseConfig";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { Spinner } from 'react-bootstrap'; 
-import { FaHome } from 'react-icons/fa'; // Import the Home icon
-
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,7 +18,7 @@ const LoginForm = () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       alert("Logged in successfully");
-      navigate("/chatbot"); // Navigate to the chatbot page
+      navigate("/admin-dashboard"); // Navigate to the chatbot page
     } catch {
       setError("Failed to log in. Please check your credentials.");
     } finally {
@@ -28,27 +26,10 @@ const LoginForm = () => {
     }
   };
 
-  const handleGoogleLogin = async () => {
-    setError(""); // Clear previous errors
-    setLoading(true); // Start loading
-    try {
-      await signInWithPopup(auth, googleProvider);
-      alert("Logged in with Google");
-      navigate("/chatbot"); // Navigate to the chatbot page
-    } catch {
-      setError("Failed to log in with Google.");
-    } finally {
-      setLoading(false); // Stop loading
-    }
-  };
-
-  return (
+  
+    return (
     <div className="flex flex-col items-center justify-center w-full px-4 mt-10">
       <div className="bg-white p-4 rounded-lg shadow shadow-slate-700 w-full max-w-md">
-        {/* Home Icon positioned at the top left */}
-        <Link to="/" className="absolute top-4 left-4 text-indigo-600 hover:underline">
-          <FaHome className="text-2xl" /> {/* Back to home icon */}
-        </Link>
 
         <h2 className="text-xl font-bold mb-4 text-center text-gray-800">Login</h2>
 
@@ -94,23 +75,6 @@ const LoginForm = () => {
             )}
           </button>
         </form>
-
-        <div className="mt-6 text-center">
-          <p className="text-gray-600">Or</p>
-          <button
-            onClick={handleGoogleLogin}
-            className="w-full mt-4 bg-red-500 text-white py-3 rounded-lg font-medium hover:bg-red-600 transition duration-200"
-          >
-            Sign in with Google
-          </button>
-        </div>
-
-        <p className="mt-6 text-sm text-gray-700">
-          Don’t have an account?{" "}
-          <Link to="/signup" className="text-blue-500 font-medium hover:underline">
-            Register here
-          </Link>
-        </p>
       </div>
     </div>
   );

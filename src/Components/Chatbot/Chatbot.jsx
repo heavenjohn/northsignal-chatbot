@@ -1,105 +1,88 @@
-import  { useState, useEffect } from 'react';
-import * as tf from '@tensorflow/tfjs';  // Import TensorFlow.js
-import intents from './intents';  // Importing intents from intents.jsx
-import responses from './responses';  // Importing responses from responses.jsx
+import { useState } from 'react';
+import { AiOutlineMessage } from 'react-icons/ai'; // Chatbot Icon
+import predictResponse from './Response/response'; // Import the function for predictions
 
 const Chatbot = () => {
-  const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState('');
-  const [model, setModel] = useState(null);
+  const [isOpen, setIsOpen] = useState(false); // Toggle chatbot window
+  const [messages, setMessages] = useState([]); // Store messages
+  const [inputText, setInputText] = useState(''); // User input
 
-  // Load your custom model
-  useEffect(() => {
-    const loadModel = async () => {
-      try {
-        // Path to your custom model (you can load it from a local folder or Firebase)
-        const loadedModel = await tf.loadLayersModel('https://nsvchatbot-e11ed.web.app/model.json');
-        setModel(loadedModel);
-        console.log('Custom model loaded');
-      } catch (error) {
-        console.error('Error loading model:', error);
-      }
-    };
+  const toggleChatbot = () => setIsOpen(!isOpen);
 
-    loadModel();
-  }, []);
+  const handleSend = async () => {
+    if (inputText.trim() === '') return;
 
-  // Function to recognize intent using the custom model
-  const recognizeIntent = async (userInput) => {
-    if (!model) return "I'm still loading, please wait.";
+    const userMessage = { sender: 'user', text: inputText };
+    setMessages((prev) => [...prev, userMessage]);
 
-    // Preprocess user input and convert it to tensor format
-    const inputTensor = tf.tensor([userInput]);
+    const botResponse = await predictResponse(inputText);
+    const botMessage = { sender: 'bot', text: botResponse };
 
-    // Make a prediction using the custom model
-    const prediction = model.predict(inputTensor);
-
-    // You can customize this section based on how your model outputs predictions
-    const predictedIntent = await prediction.data();
-    let maxScore = Math.max(...predictedIntent);  // Get the maximum score
-    const intentIndex = predictedIntent.indexOf(maxScore);  // Get the index of the max score
-    const intent = Object.keys(intents)[intentIndex];  // Map index to intent
-
-    return intent;
-  };
-
-  // Function to generate response
-  const generateResponse = async (userInput) => {
-    const intent = await recognizeIntent(userInput);
-    if (intent && responses[intent]) {
-      return responses[intent];
-    } else {
-      return responses.default;  // Using default response for unmatched intent
-    }
-  };
-
-  // Handle send message
-  const handleSendMessage = async () => {
-    if (input.trim() !== "") {
-      const userMessage = { text: input, user: true };
-      const botMessage = { text: await generateResponse(input), user: false };
-
-      setMessages([...messages, userMessage, botMessage]);
-      setInput('');
-    }
+    setMessages((prev) => [...prev, botMessage]);
+    setInputText('');
   };
 
   return (
-    <div className="w-full h-screen bg-gray-100 flex justify-center items-center">
-      <div className="w-full max-w-lg bg-white rounded-lg shadow-lg">
-        <div className="flex flex-col p-4 space-y-4 h-[450px] overflow-auto">
-          <div className="flex flex-col space-y-2">
+    <div className="fixed bottom-4 right-4 flex flex-col items-end">
+      {/* Chatbot Icon */}
+      <button
+        onClick={toggleChatbot}
+        className="bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 transition"
+      >
+        <AiOutlineMessage size={24} />
+      </button>
+
+      {/* Chatbot Window */}
+      {isOpen && (
+        <div className="bg-white shadow-lg rounded-lg w-72 mt-2">
+          {/* Header */}
+          <div className="bg-blue-500 text-white p-3 rounded-t-lg flex justify-between items-center">
+            <h2 className="text-lg font-semibold">Chatbot</h2>
+            <button onClick={toggleChatbot} className="text-white font-bold">
+              ✕
+            </button>
+          </div>
+
+          {/* Messages */}
+          <div className="p-3 h-60 overflow-y-auto">
             {messages.map((msg, index) => (
               <div
                 key={index}
-                className={`flex ${msg.user ? 'justify-end' : 'justify-start'}`}
+                className={`mb-2 ${
+                  msg.sender === 'user' ? 'text-right' : 'text-left'
+                }`}
               >
                 <div
-                  className={`px-4 py-2 max-w-xs rounded-lg ${msg.user ? 'bg-blue-500 text-white' : 'bg-gray-300'}`}
+                  className={`inline-block px-3 py-2 rounded-lg ${
+                    msg.sender === 'user'
+                      ? 'bg-blue-500 text-white'
+                      : 'bg-gray-200 text-black'
+                  }`}
                 >
                   {msg.text}
                 </div>
               </div>
             ))}
           </div>
-        </div>
 
-        <div className="flex items-center p-4 space-x-2 border-t border-gray-300">
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            className="flex-1 p-2 border border-gray-300 rounded-lg"
-            placeholder="Type a message..."
-          />
-          <button
-            onClick={handleSendMessage}
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg"
-          >
-            Send
-          </button>
+          {/* Input */}
+          <div className="p-3 border-t flex">
+            <input
+              type="text"
+              value={inputText}
+              onChange={(e) => setInputText(e.target.value)}
+              placeholder="Type a message..."
+              className="flex-grow p-2 border rounded-l-lg focus:outline-none"
+            />
+            <button
+              onClick={handleSend}
+              className="bg-blue-500 text-white px-4 py-2 rounded-r-lg hover:bg-blue-600 transition"
+            >
+              Send
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

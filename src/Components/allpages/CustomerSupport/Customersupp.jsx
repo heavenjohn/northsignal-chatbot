@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Footer from "../../pages/Footer";
+import Navbar from "../../Navbar";
 
 const CommunitySupport = () => {
   const [faqOpen, setFaqOpen] = useState(null);
@@ -29,8 +30,12 @@ const CommunitySupport = () => {
   return (
     <div className="bg-gray-100 min-h-screen">
       {/* Header Section */}
+        <div className="mb-14">
+          <Navbar/>
+        </div>
       <header className="bg-gradient-to-r from-blue-500 to-blue-600 text-white py-6">
         <div className="container mx-auto text-center">
+          
           <h1 className="text-4xl font-bold">Community Support Hub</h1>
           <p className="mt-3 text-lg">
             Need help? We’ve got you covered. Explore our resources below.

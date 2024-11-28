@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useEffect } from 'react';
+import Navbar from '../../Navbar';
+import Footer from '../../pages/Footer';
+
 
 const QualityServices = () => {
   // Sample list of services
@@ -36,6 +39,10 @@ const QualityServices = () => {
   return (
     <section className="py-12 px-6 bg-gray-50 min-h-screen relative">
       {/* Home icon positioned in the upper-right corner */}
+      <div className='mb-14'>
+        <Navbar/>
+        
+      </div>
       <div className="absolute top-4 right-4">
         <Link to="/"> {/* Link to home page */}
           <FaHome className="text-3xl text-gray-700 cursor-pointer hover:text-blue-500 transition-all" />
@@ -62,7 +69,8 @@ const QualityServices = () => {
             <p className="text-gray-600">{service.description}</p>
           </div>
         ))}
-      </div>
+      </div>  
+      <Footer/>
     </section>
   );
 };

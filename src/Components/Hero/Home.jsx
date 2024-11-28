@@ -1,7 +1,6 @@
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import logo from "../../assets/logo/North_Signal.png";
 import Navbar from "../../Components/Navbar";
 import Footer from "../../Components/pages/Footer"; // Importing the Footer component
@@ -14,12 +13,6 @@ const Hero = () => {
       once: true, // Animation will happen only once
     });
   }, []);
-
-  const navigate = useNavigate();
-
-  const handleLoginClick = () => {
-    navigate('/login'); // Navigate to the login page (ensure this matches your route)
-  };
 
   return (
     <div className="dark:bg-black dark:text-white duration-300 relative z-20 flex flex-col min-h-screen">
@@ -66,15 +59,6 @@ const Hero = () => {
               est inventore architecto eligendi enim officiis, eaque iure itaque
               eius error fugit eveniet magnam numquam.
             </p>
-            <div className="flex justify-center sm:justify-start">
-              <button
-                onClick={handleLoginClick}
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 sm:py-3 sm:px-8 text-sm sm:text-base rounded dark:bg-red-600 dark:hover:bg-red-800 transition-all duration-300"
-                aria-label="Go to Login Page"
-              >
-                Online Service
-              </button>
-            </div>
           </div>
         </div>
       </div>
