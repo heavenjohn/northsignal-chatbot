@@ -1,87 +1,137 @@
-import { useState } from 'react';
-import { AiOutlineMessage } from 'react-icons/ai'; // Chatbot Icon
-import predictResponse from './Response/response'; // Import the function for predictions
+import * as tf from '@tensorflow/tfjs';
+import { useEffect, useState } from 'react';
+import data from './intents.json'; // Assuming the JSON is in the same directory
 
 const Chatbot = () => {
-  const [isOpen, setIsOpen] = useState(false); // Toggle chatbot window
-  const [messages, setMessages] = useState([]); // Store messages
-  const [inputText, setInputText] = useState(''); // User input
+  const [model, setModel] = useState(null);
+  const [userInput, setUserInput] = useState('');
+  const [chatHistory, setChatHistory] = useState([]);
+  const [classLabels, setClassLabels] = useState([]);
+  const [vocabulary, setVocabulary] = useState({});
+  const [isModelLoading, setIsModelLoading] = useState(true);
+  const [isModelLoaded, setIsModelLoaded] = useState(false);
 
-  const toggleChatbot = () => setIsOpen(!isOpen);
+  // Load model and initialize classes and vocabulary
+  useEffect(() => {
+    const loadModel = async () => {
+      try {
+        console.log('Loading model...');
+        const loadedModel = await tf.loadLayersModel('https://nsvchatbot-e11ed.web.app/Model/model.json');
+        setModel(loadedModel);
 
-  const handleSend = async () => {
-    if (inputText.trim() === '') return;
+        // Extract class labels (unique tags) from intents
+        const uniqueTags = Array.from(new Set(data.intents.map((intent) => intent.tag)));
+        setClassLabels(uniqueTags);
 
-    const userMessage = { sender: 'user', text: inputText };
-    setMessages((prev) => [...prev, userMessage]);
+        // Build vocabulary for bag-of-words model
+        const vocab = {};
+        let index = 1; // Index starts at 1 (to avoid 0 padding)
+        data.intents.forEach((intent) => {
+          intent.patterns.forEach((pattern) => {
+            pattern.toLowerCase().split(/\W+/).forEach((word) => {
+              if (!vocab[word]) {
+                vocab[word] = index++;
+              }
+            });
+          });
+        });
+        setVocabulary(vocab);
 
-    const botResponse = await predictResponse(inputText);
-    const botMessage = { sender: 'bot', text: botResponse };
+        setIsModelLoaded(true);
+        setIsModelLoading(false);
+        console.log('Model loaded successfully.');
+      } catch (error) {
+        console.error('Error loading model:', error);
+        setIsModelLoaded(false);
+        setIsModelLoading(false);
+      }
+    };
 
-    setMessages((prev) => [...prev, botMessage]);
-    setInputText('');
+    loadModel();
+  }, []);
+
+  // Preprocess user input to match the model's input requirements
+  const preprocessInput = (input) => {
+    const tokens = input.toLowerCase().split(/\W+/);
+    const bag = Array(Object.keys(vocabulary).length).fill(0);
+
+    tokens.forEach((token) => {
+      if (vocabulary[token]) {
+        bag[vocabulary[token] - 1] = 1; // Set the corresponding index to 1
+      }
+    });
+
+    // Reshape to 3D tensor for LSTM ([samples, timesteps, features])
+    return tf.tensor3d([bag], [1, bag.length, 1]); // 1 sample, length of bag, 1 feature
+  };
+
+  // Predict the intent of the user input
+  const predictIntent = async (input) => {
+    if (!model) {
+      console.error('Model not loaded yet');
+      return "Sorry, I'm not ready yet.";
+    }
+
+    try {
+      const inputTensor = preprocessInput(input);
+      const prediction = model.predict(inputTensor);
+      const predictedIndex = prediction.argMax(-1).dataSync()[0];
+      const predictedTag = classLabels[predictedIndex];
+
+      // Find responses for the predicted tag
+      const responses =
+        data.intents.find((intent) => intent.tag === predictedTag)?.responses || [
+          "I'm sorry, I don't understand that.",
+        ];
+
+      return responses[Math.floor(Math.random() * responses.length)];
+    } catch (error) {
+      console.error('Error predicting intent:', error);
+      return "Sorry, something went wrong.";
+    }
+  };
+
+  // Handle user input submission
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    if (!userInput.trim()) return;
+
+    const botResponse = await predictIntent(userInput);
+
+    // Update chat history with the new message
+    setChatHistory((prevHistory) => [
+      ...prevHistory,
+      { user: userInput, bot: botResponse },
+    ]);
+    setUserInput('');
   };
 
   return (
-    <div className="fixed bottom-4 right-4 flex flex-col items-end">
-      {/* Chatbot Icon */}
-      <button
-        onClick={toggleChatbot}
-        className="bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 transition"
-      >
-        <AiOutlineMessage size={24} />
-      </button>
-
-      {/* Chatbot Window */}
-      {isOpen && (
-        <div className="bg-white shadow-lg rounded-lg w-72 mt-2">
-          {/* Header */}
-          <div className="bg-blue-500 text-white p-3 rounded-t-lg flex justify-between items-center">
-            <h2 className="text-lg font-semibold">Chatbot</h2>
-            <button onClick={toggleChatbot} className="text-white font-bold">
-              ✕
-            </button>
+    <div className="chatbot">
+      <div className="chat-history">
+        {chatHistory.map((entry, index) => (
+          <div key={index}>
+            <p><strong>User:</strong> {entry.user}</p>
+            <p><strong>Bot:</strong> {entry.bot}</p>
           </div>
+        ))}
+      </div>
 
-          {/* Messages */}
-          <div className="p-3 h-60 overflow-y-auto">
-            {messages.map((msg, index) => (
-              <div
-                key={index}
-                className={`mb-2 ${
-                  msg.sender === 'user' ? 'text-right' : 'text-left'
-                }`}
-              >
-                <div
-                  className={`inline-block px-3 py-2 rounded-lg ${
-                    msg.sender === 'user'
-                      ? 'bg-blue-500 text-white'
-                      : 'bg-gray-200 text-black'
-                  }`}
-                >
-                  {msg.text}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Input */}
-          <div className="p-3 border-t flex">
-            <input
-              type="text"
-              value={inputText}
-              onChange={(e) => setInputText(e.target.value)}
-              placeholder="Type a message..."
-              className="flex-grow p-2 border rounded-l-lg focus:outline-none"
-            />
-            <button
-              onClick={handleSend}
-              className="bg-blue-500 text-white px-4 py-2 rounded-r-lg hover:bg-blue-600 transition"
-            >
-              Send
-            </button>
-          </div>
-        </div>
+      {/* Show loading message while the model is loading */}
+      {isModelLoading ? (
+        <p>Loading model...</p>
+      ) : isModelLoaded ? (
+        <form onSubmit={handleFormSubmit}>
+          <input
+            type="text"
+            value={userInput}
+            onChange={(e) => setUserInput(e.target.value)}
+            placeholder="Ask something..."
+          />
+          <button type="submit">Send</button>
+        </form>
+      ) : (
+        <p>Failed to load model. Please try again later.</p>
       )}
     </div>
   );

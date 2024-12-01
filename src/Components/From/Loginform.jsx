@@ -1,78 +1,77 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { auth} from "../Firebase/firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { Spinner } from 'react-bootstrap'; 
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import logo from "../../assets/logo/North_Signal.png";
+import { useAuth } from "../context/AuthProvider";
+import { auth } from "../Firebase/firebaseConfig";
+
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false); // Loading state for button
-  const navigate = useNavigate(); // Initialize navigate
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const { currentUser, login } = useAuth();
+
+  // Redirect to dashboard if already logged in
+  useEffect(() => {
+    if (currentUser) {
+      navigate("/chatbot");
+    }
+  }, [currentUser, navigate]);
 
   const handleEmailLogin = async (e) => {
     e.preventDefault();
-    setError(""); // Clear previous errors
-    setLoading(true); // Start loading
+    setError("");
+    setLoading(true);
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      alert("Logged in successfully");
-      navigate("/admin-dashboard"); // Navigate to the chatbot page
+      login(); // Optional: Trigger login logic
+      navigate("/chatbot");
     } catch {
       setError("Failed to log in. Please check your credentials.");
     } finally {
-      setLoading(false); // Stop loading
+      setLoading(false);
     }
   };
 
-  
-    return (
-    <div className="flex flex-col items-center justify-center w-full px-4 mt-10">
-      <div className="bg-white p-4 rounded-lg shadow shadow-slate-700 w-full max-w-md">
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        {/* Header */}
+        <div className="text-center mb-6">
+          <img src={logo} alt="Logo" className="w-20 h-20 mx-auto mb-2" />
+          <h2 className="text-2xl font-bold text-gray-800">Admin Login</h2>
+        </div>
 
-        <h2 className="text-xl font-bold mb-4 text-center text-gray-800">Login</h2>
+        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
 
-        {error && <p className="text-red-500 text-center mb-2">{error}</p>}
-
-        <form onSubmit={handleEmailLogin} className="space-y-3">
-          <div>
-            <label htmlFor="email" className="block font-medium text-gray-700">Email</label>
-            <input
-              type="email"
-              id="email"
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-indigo-500"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-
-          <div>
-            <label htmlFor="password" className="block font-medium text-gray-700">Password</label>
-            <input
-              type="password"
-              id="password"
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-indigo-500"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-
+        <form onSubmit={handleEmailLogin} className="space-y-4">
+          <input
+            type="email"
+            placeholder="Email"
+            className="w-full p-3 border border-gray-300 rounded focus:outline-none"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            className="w-full p-3 border border-gray-300 rounded focus:outline-none"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-2 rounded-lg font-medium transition duration-200 ${loading ? 'bg-gray-400' : 'bg-indigo-600 hover:bg-indigo-700 text-white'}`}
+            className={`w-full p-3 rounded text-white ${
+              loading ? "bg-gray-400" : "bg-indigo-600 hover:bg-indigo-700"
+            }`}
           >
-            {loading ? (
-              <div className="flex items-center justify-center">
-                <Spinner animation="border" size="sm" className="mr-2" />
-                Loading...
-              </div>
-            ) : (
-              "Log in"
-            )}
+            {loading ? "Logging in..." : "Log in"}
           </button>
         </form>
       </div>

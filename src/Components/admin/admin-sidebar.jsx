@@ -1,10 +1,10 @@
-import { FaHome, FaUsers, FaCog, FaChartBar, FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { useState } from "react";
-import PropTypes from 'prop-types'; // Import PropTypes
+import { FaHome, FaUsers, FaCog, FaChartBar, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 const Sidebar = ({ setTitle }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [activeLink, setActiveLink] = useState("Dashboard");
+  const [activeLink, setActiveLink] = useState('Dashboard');
 
   // Handle link click and update title
   const handleLinkClick = (title) => {
@@ -63,9 +63,8 @@ const Sidebar = ({ setTitle }) => {
   );
 };
 
-// Prop validation using PropTypes
 Sidebar.propTypes = {
-  setTitle: PropTypes.func.isRequired, // Validate that setTitle is a required function
+  setTitle: PropTypes.func.isRequired,
 };
 
 export default Sidebar;

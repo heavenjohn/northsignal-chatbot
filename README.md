@@ -10,3 +10,5 @@ Currently, two official plugins are available:
 
 username: admin@gmail.com
 password: admin123
+
+i use google colab to make model 

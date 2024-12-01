@@ -64,7 +64,7 @@ const Hero = () => {
       </div>
 
       {/* Footer */}
-      <Footer />
+    <Footer/>
     </div>
   );
 };
