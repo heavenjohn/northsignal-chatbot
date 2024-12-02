@@ -7,14 +7,14 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyA-6fintAaUyUUWFBqnZmfsNwwnIV3x88c",
-  authDomain: "nvschatbot.firebaseapp.com",
-  databaseURL: "https://nvschatbot-default-rtdb.firebaseio.com",
-  projectId: "nvschatbot",
-  storageBucket: "nvschatbot.firebasestorage.app",
-  messagingSenderId: "316590867227",
-  appId: "1:316590867227:web:60d5804a62667245d809be",
-  measurementId: "G-P9VTN89XR5"
+  apiKey: "AIzaSyBkEuIT9lOOqn9JHSViqjfJsUYrAPiSwno",
+  authDomain: "nsv-chatbot.firebaseapp.com",
+  databaseURL: "https://nsv-chatbot-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "nsv-chatbot",
+  storageBucket: "nsv-chatbot.firebasestorage.app",
+  messagingSenderId: "260944441289",
+  appId: "1:260944441289:web:9fca45ef7e7d3e28108218",
+  measurementId: "G-G19D4REX62"
 };
 
 // Initialize Firebase

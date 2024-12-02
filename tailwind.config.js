@@ -11,6 +11,7 @@ export default {
         primary: "#ed1c24",
         dark: "#111111",
         yellow: "#f5c001",
+        blue: "#1a4698",
       },
       container: {
         center: true, // Centers the container

@@ -15,11 +15,9 @@ import Dashboard from './Components/pages/admin-dashboard';
 import Security from './Components/pages/Security';
 import Contact from './Components/pages/Services';
 import AccountSettings from './Components/From/AccountSettings';
-import Chatbot from './Components/Chatbot/Chatbot'
+import Chatbot from './Components/Chatbot/Chatbot';
 
 const App = () => {
-
-  // AOS initialization
   useEffect(() => {
     AOS.init({
       offset: 100,
@@ -31,37 +29,32 @@ const App = () => {
   return (
     <AuthProvider>
       <Router>
-        <div className="flex">
-          <div className="flex-1">
-            <Routes>
-              {/* Public Routes */}
-              <Route path="/" element={<Home />} /> 
-              <Route path="/home" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/services" element={<Contact />} />
-              <Route path="/security" element={<Security />} />
-              <Route path="/aboutus" element={<AboutUs />} />
-              <Route path="/customersupport" element={<CustomerSupport />} />
-              <Route path="/qualityservices" element={<QualityService />} />
-              <Route path="/accountsetting" element={<AccountSettings />} />
-              <Route path="/chatbot" element={<Chatbot />} />
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/services" element={<Contact />} />
+            <Route path="/security" element={<Security />} />
+            <Route path="/aboutus" element={<AboutUs />} />
+            <Route path="/customersupport" element={<CustomerSupport />} />
+            <Route path="/qualityservices" element={<QualityService />} />
+            <Route path="/accountsetting" element={<AccountSettings />} />
+            <Route path="/chatbot" element={<Chatbot />} />
 
-
-              {/* Admin Routes */}
-              <Route path="/admin" element={<LoginForm />} />
-              <Route
-                path="/admin-dashboard"
-                element={
-                  <ProtectedRoute>
-                    <Dashboard />
-                  </ProtectedRoute>
-                }
-              />
-              {/* Catch-all route for undefined pages */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </div>
-        </div>
+            {/* Admin Routes */}
+            <Route path="/admin" element={<LoginForm />} />
+            <Route
+              path="/admin-dashboard"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            {/* Catch-all route for undefined pages */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
       </Router>
     </AuthProvider>
   );

@@ -17,7 +17,9 @@ const Hero = () => {
   return (
     <div className="dark:bg-black dark:text-white duration-300 relative z-20 flex flex-col min-h-screen">
       {/* Navbar */}
+      <div className='flex mt-16'>
       <Navbar />
+      </div>
 
       {/* Hero Section */}
       <div className="container mx-auto px-4 sm:px-8 flex-grow flex items-center">
@@ -36,7 +38,7 @@ const Hero = () => {
           </div>
 
           {/* Text Section */}
-          <div className="flex flex-col justify-center space-y-5 sm:space-y-6 text-center sm:text-left order-2 sm:order-1">
+          <div className="flex flex-col justify-center space-y-5 sm:space-y-6 text-center sm:text-left order-2 sm:order-1 mb-10">
             <p
               data-aos="fade-up"
               className="text-primary text-xl sm:text-2xl font-serif"

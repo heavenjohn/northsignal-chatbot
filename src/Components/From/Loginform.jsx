@@ -16,7 +16,7 @@ const LoginForm = () => {
   // Redirect to dashboard if already logged in
   useEffect(() => {
     if (currentUser) {
-      navigate("/chatbot");
+      navigate("/admin-dashboard");
     }
   }, [currentUser, navigate]);
 
@@ -28,7 +28,7 @@ const LoginForm = () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       login(); // Optional: Trigger login logic
-      navigate("/chatbot");
+      navigate("/admin");
     } catch {
       setError("Failed to log in. Please check your credentials.");
     } finally {

@@ -16,7 +16,7 @@ const Chatbot = () => {
     const loadModel = async () => {
       try {
         console.log('Loading model...');
-        const loadedModel = await tf.loadLayersModel('https://nsvchatbot-e11ed.web.app/Model/model.json');
+        const loadedModel = await tf.loadLayersModel('https://nsv-chatbot.web.app/Model/model.json');
         setModel(loadedModel);
 
         // Extract class labels (unique tags) from intents

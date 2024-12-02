@@ -11,40 +11,52 @@ const About = () => {
   useEffect(() => {
     AOS.init({
       duration: 900, // Default duration for AOS animations
-      once: false, // Animation should happen every time you scroll to it
+      once: true, // Animation happens only once when in view
     });
   }, []);
 
   return (
-    <div className="dark:bg-black dark:text-white bg-slate-100 duration-300 h-screen flex flex-col"> {/* Changed to flex-col to accommodate the footer */}
-      <Navbar />
-      <div className="container flex-grow flex items-center"> {/* Use flex-grow to ensure it takes up remaining space */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 place-items-center">
-          {/* Image Section with AOS Animation */}
-          <div data-aos="slide-right">
-            <img 
-              src={logo} 
+    <div className="dark:bg-black dark:text-white duration-300 min-h-screen flex flex-col">
+      {/* Navbar */}
+      <div className='flex mt-16'>
+        <Navbar />
+      </div>
+
+      {/* Main Content */}
+      <div className="container mx-auto px-4 sm:px-8 flex-grow flex items-center mb-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 place-items-center">
+          {/* Image Section */}
+          <div data-aos="slide-right" className="flex justify-center lg:justify-end">
+            <img
+              src={logo}
               alt="North Signal Logo" // Updated alt text for better accessibility
-              className="sm:scale-105 sm:translate-x-11 max-h-[400px] drop-shadow-[2px_20px_6px_rgba(0, 0, 0, 0.5)]" // Added some styling for responsiveness
+              className="max-w-full max-h-[300px] sm:max-h-[400px] object-contain drop-shadow-md"
             />
           </div>
 
           {/* Text Section */}
-          <div className="space-y-5 sm:p-16 pb-6">
-            <h1 data-aos="fade-up" className="text-3xl sm:text-4xl font-bold font-serif">About</h1>
-            <p data-aos="fade-up">
+          <div data-aos="fade-up" className="text-center lg:text-left space-y-6 lg:pl-12">
+            <h1 className="text-3xl sm:text-4xl font-bold font-serif">
+              About Us
+            </h1>
+            <p className="text-sm sm:text-base lg:text-lg">
               Welcome to North Signal, where we aim to provide exceptional services and support to our community.
             </p>
-            <p data-aos="fade-up">
+            <p className="text-sm sm:text-base lg:text-lg">
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur sequi corrupti delectus itaque aut dignissimos.
             </p>
-            <Link to="/aboutus" data-aos="fade-up">
-              <button className="button-outline">See more</button>
+            <Link to="/aboutus">
+              <button className="bg-primary text-white px-6 py-2 rounded shadow-md hover:bg-opacity-90 transform hover:scale-105 active:scale-95 transition-transform duration-300 mt-5">
+                See More
+              </button>
             </Link>
+
           </div>
         </div>
       </div>
-      <Footer /> {/* Footer will appear at the bottom of the page */}
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };
