@@ -1,0 +1,177 @@
+{
+  "name": "corpus",
+  "locale": "en",
+  "data": [
+    {
+      "intent": "greeting",
+      "utterances": [
+        "Hi",
+        "How are you?",
+        "Is anyone there?",
+        "Hello",
+        "Good day"
+      ],
+      "answers": [
+        "Hello!",
+        "Hi there!",
+        "Greetings!",
+        "How can I assist you today?"
+      ]
+    },
+    {
+      "intent": "good_bye",
+      "utterances": ["Bye", "See you later", "Goodbye", "Take care"],
+      "answers": [
+        "Goodbye!",
+        "See you later!",
+        "Have a nice day!",
+        "Take care!"
+      ]
+    },
+    {
+      "intent": "thanks",
+      "utterances": ["Thanks", "Thank you", "That's helpful"],
+      "answers": [
+        "You're welcome!",
+        "Happy to help!",
+        "Anytime!",
+        "Glad I could assist!"
+      ]
+    },
+    {
+      "intent": "noanswer",
+      "utterances": [],
+      "answers": ["Sorry, I don't understand. Could you rephrase that?"]
+    },
+    {
+      "intent": "barangay_clearance_requirements",
+      "utterances": [
+        "What are the requirements for getting a barangay clearance?",
+        "What do I need for a barangay clearance?",
+        "Barangay clearance requirements?",
+        "How can I get a barangay clearance?"
+      ],
+      "answers": [
+        "To get a barangay clearance, you typically need: a valid ID, proof of residency, and a community tax certificate (cedula). Some barangays may require additional documents."
+      ]
+    },
+    {
+      "intent": "barangay_certificate_processing_time",
+      "utterances": [
+        "How long does it take to process a barangay certificate?",
+        "How much time does barangay clearance take?",
+        "Barangay clearance processing time?",
+        "How long does it take to get a barangay certificate?"
+      ],
+      "answers": [
+        "Processing a barangay certificate usually takes anywhere from a few minutes to a few hours. In some cases, it may take a day, depending on the barangay's process."
+      ]
+    },
+    {
+      "intent": "barangay_clearance_fee",
+      "utterances": [
+        "How much is the fee for a barangay clearance?",
+        "What is the cost of a barangay clearance?",
+        "Barangay clearance fee?",
+        "How much do I need to pay for barangay clearance?",
+        "clearance fee"
+      ],
+      "answers": [
+        "The fee for a barangay clearance may vary depending on the barangay and the purpose of the clearance, such as for employment, business, or personal use."
+      ]
+    },
+    {
+      "intent": "barangay_id",
+      "utterances": [
+        "How can I get a barangay ID?",
+        "What are the requirements for a barangay ID?",
+        "How much is the barangay ID?",
+        "Where do I get a barangay ID?",
+        "id"
+      ],
+      "answers": [
+        "To get a barangay ID, you usually need to provide proof of residency (e.g., a utility bill), a valid ID, and a completed application form. Fees may vary depending on the barangay."
+      ]
+    },
+    {
+      "intent": "barangay_indigency",
+      "utterances": [
+        "How can I get a barangay indigency?",
+        "What are the requirements for a barangay indigency?",
+        "How much is the barangay indigency?",
+        "Where do I get a barangay indigency certificate?",
+        "Barangay indigency certificate requirements",
+        "indigency"
+      ],
+      "answers": [
+        "To get a Barangay Certificate of Indigency, you typically need to provide a valid ID, proof of residency, and an affidavit of indigency (or similar supporting documents). Fees may vary, but many barangays provide it for free or for a minimal fee."
+      ]
+    },
+    {
+      "intent": "business_clearance",
+      "utterances": [
+        "What are the requirements for getting a business clearance?",
+        "How can I apply for a business clearance?",
+        "What do I need to get a business clearance?",
+        "Business clearance requirements",
+        "How much is a business clearance?",
+        "clearance"
+      ],
+      "answers": [
+        "To obtain a business clearance, you typically need to submit the following: a filled-out application form from the barangay, a valid ID, proof of business registration (DTI or SEC), proof of address (lease contract or utility bill), and payment for the processing fee. The fee may vary depending on your business size and location."
+      ]
+    },
+    {
+      "intent": "id_barangay_general",
+      "utterances": [
+        "What is a barangay?",
+        "What does a barangay do?",
+        "What services does a barangay provide?",
+        "Can I go to the barangay for help?",
+        "Tell me more about the barangay",
+        "barangay",
+        "Barangay"
+      ],
+      "answers": [
+        "A barangay is the smallest administrative division in the Philippines. It handles local governance, community services, and dispute resolution. Barangays issue important documents such as certificates of residency, indigency, and clearance. They also assist with local concerns like health services, maintaining peace, and neighborhood development."
+      ]
+    },
+    {
+      "intent": "barangay_place",
+      "utterances": [
+        "Where is my barangay located?",
+        "How do I find my barangay?",
+        "Which barangay am I in?",
+        "What barangay does this area belong to?",
+        "How can I contact my barangay?",
+        "Where is the barangay hall located?",
+        "place",
+        "lugar",
+        "saan lugar",
+        "anong lugar"
+      ],
+      "answers": [
+        "Barangay Central Signal is located in Taguig City, Metro Manila. You can find the barangay hall along Levi Mariano Avenue, which is a central point in the area. For more information, you can check the Taguig City government website or visit the barangay hall for inquiries."
+      ]
+    },
+    {
+      "intent": "kamusta_ka",
+      "utterances": ["kamusta ka", "kamusta", "musta"],
+      "answers": [
+        "Kamusta ka din?",
+        "Kamusta ang araw mo?",
+        "Magandang araw, sana maayos ang kalagayan mo!"
+      ]
+    },
+    {
+      "intent": "id_paalam",
+      "utterances": ["Paalam", "Kita-kits", "Ingat"],
+      "answers": ["Paalam!", "Kita-kits!", "Mag-ingat ka!"]
+    },
+    {
+      "intent": "thanks",
+      "utterances": ["Salamat", "Maraming salamat", "Nakakatulong ito"],
+      "answers": ["Walang anuman!", "Masaya akong makatulong!", "Sa uulitin!"]
+    }
+  ]
+}
