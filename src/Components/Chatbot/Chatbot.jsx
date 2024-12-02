@@ -1,16 +1,18 @@
-import * as tf from '@tensorflow/tfjs';
-import { useEffect, useState } from 'react';
-import data from './intents.json'; // Assuming the JSON is in the same directory
+import * as tf from "@tensorflow/tfjs";
+import { useEffect, useState } from "react";
+import data from "./intents.json"; // Assuming the JSON is in the same directory
+import axios from "axios";
 
 const Chatbot = () => {
   const [model, setModel] = useState(null);
-  const [userInput, setUserInput] = useState('');
+  const [userInput, setUserInput] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
   const [classLabels, setClassLabels] = useState([]);
   const [vocabulary, setVocabulary] = useState({});
   const [isModelLoading, setIsModelLoading] = useState(true);
   const [isModelLoaded, setIsModelLoaded] = useState(false);
 
+<<<<<<< HEAD
   // Load model and initialize classes and vocabulary
   useEffect(() => {
     const loadModel = async () => {
@@ -50,12 +52,14 @@ const Chatbot = () => {
     loadModel();
   }, []);
 
+=======
+>>>>>>> 28c0d29687209266c67968d5ffe52296c7486d38
   // Preprocess user input to match the model's input requirements
-  const preprocessInput = (input) => {
+  const preprocessInput = input => {
     const tokens = input.toLowerCase().split(/\W+/);
     const bag = Array(Object.keys(vocabulary).length).fill(0);
 
-    tokens.forEach((token) => {
+    tokens.forEach(token => {
       if (vocabulary[token]) {
         bag[vocabulary[token] - 1] = 1; // Set the corresponding index to 1
       }
@@ -66,9 +70,9 @@ const Chatbot = () => {
   };
 
   // Predict the intent of the user input
-  const predictIntent = async (input) => {
+  const predictIntent = async input => {
     if (!model) {
-      console.error('Model not loaded yet');
+      console.error("Model not loaded yet");
       return "Sorry, I'm not ready yet.";
     }
 
@@ -79,31 +83,40 @@ const Chatbot = () => {
       const predictedTag = classLabels[predictedIndex];
 
       // Find responses for the predicted tag
-      const responses =
-        data.intents.find((intent) => intent.tag === predictedTag)?.responses || [
-          "I'm sorry, I don't understand that.",
-        ];
+      const responses = data.intents.find(intent => intent.tag === predictedTag)
+        ?.responses || ["I'm sorry, I don't understand that."];
 
       return responses[Math.floor(Math.random() * responses.length)];
     } catch (error) {
-      console.error('Error predicting intent:', error);
+      console.error("Error predicting intent:", error);
       return "Sorry, something went wrong.";
     }
   };
 
+  const handleAiChat = async text => {
+    return await axios
+      .post("http://localhost:3000/api/nlp", { text })
+      .then(res => {
+        console.log(res.data);
+        return res?.data?.answer;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   // Handle user input submission
-  const handleFormSubmit = async (event) => {
+  const handleFormSubmit = async event => {
     event.preventDefault();
     if (!userInput.trim()) return;
-
-    const botResponse = await predictIntent(userInput);
+    const botResponse = await handleAiChat(userInput);
 
     // Update chat history with the new message
-    setChatHistory((prevHistory) => [
+    setChatHistory(prevHistory => [
       ...prevHistory,
       { user: userInput, bot: botResponse },
     ]);
-    setUserInput('');
+    setUserInput("");
   };
 
   return (
@@ -111,12 +124,24 @@ const Chatbot = () => {
       <div className="chat-history">
         {chatHistory.map((entry, index) => (
           <div key={index}>
-            <p><strong>User:</strong> {entry.user}</p>
-            <p><strong>Bot:</strong> {entry.bot}</p>
+            <p>
+              <strong>User:</strong> {entry.user}
+            </p>
+            <p>
+              <strong>Bot:</strong> {entry.bot}
+            </p>
           </div>
         ))}
       </div>
-
+      <form onSubmit={handleFormSubmit}>
+        <input
+          type="text"
+          value={userInput}
+          onChange={e => setUserInput(e.target.value)}
+          placeholder="Ask something..."
+        />
+        <button type="submit">Send</button>
+      </form>
       {/* Show loading message while the model is loading */}
       {isModelLoading ? (
         <p>Loading model...</p>
@@ -125,7 +150,7 @@ const Chatbot = () => {
           <input
             type="text"
             value={userInput}
-            onChange={(e) => setUserInput(e.target.value)}
+            onChange={e => setUserInput(e.target.value)}
             placeholder="Ask something..."
           />
           <button type="submit">Send</button>
