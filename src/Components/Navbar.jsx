@@ -7,7 +7,7 @@ import logo from "../assets/logo/North_Signal.png";
 const NavLinks = [
   { id: "1", name: "HOME", link: "/home" },
   { id: "2", name: "ABOUT", link: "/about" },
-  { id: "3", name: "SERVICES", link: "/services" },
+  { id: "3", name: " OUR OFFICIALS", link: "/official" },
   { id: "4", name: "SECURITY", link: "/security" },
 ];
 

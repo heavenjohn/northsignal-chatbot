@@ -13,9 +13,8 @@ import NotFound from './Components/Notfound/NotFound';
 import About from './Components/pages/About';
 import Dashboard from './Components/pages/admin-dashboard';
 import Security from './Components/pages/Security';
-import Contact from './Components/pages/Services';
+import Contact from './Components/pages/official';
 import AccountSettings from './Components/From/AccountSettings';
-import Chatbot from './Components/Chatbot/Chatbot';
 
 const App = () => {
   useEffect(() => {
@@ -34,13 +33,12 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
             <Route path="/about" element={<About />} />
-            <Route path="/services" element={<Contact />} />
+            <Route path="/official" element={<Contact />} />
             <Route path="/security" element={<Security />} />
             <Route path="/aboutus" element={<AboutUs />} />
             <Route path="/customersupport" element={<CustomerSupport />} />
             <Route path="/qualityservices" element={<QualityService />} />
             <Route path="/accountsetting" element={<AccountSettings />} />
-            <Route path="/chatbot" element={<Chatbot />} />
 
             {/* Admin Routes */}
             <Route path="/admin" element={<LoginForm />} />
@@ -53,7 +51,7 @@ const App = () => {
               }
             />
             {/* Catch-all route for undefined pages */}
-            <Route path="*" element={<NotFound />} />
+            <Route path="*" element={<NotFound />} />`
           </Routes>
       </Router>
     </AuthProvider>

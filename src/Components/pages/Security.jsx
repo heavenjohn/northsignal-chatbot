@@ -4,6 +4,7 @@ import AOS from 'aos'; // Import AOS
 import 'aos/dist/aos.css'; // Import AOS style
 import Navbar from '../Navbar';
 import Footer from "../../Components/pages/Footer"; // Import the Footer component
+import Chatbot from '../Chatbot/Chatbot';
 
 function Security() {
   useEffect(() => {
@@ -55,6 +56,7 @@ function Security() {
           </div>
         </div>
       </div>
+      <Chatbot/>
       <Footer /> {/* Insert Footer here */}
     </div>
   );

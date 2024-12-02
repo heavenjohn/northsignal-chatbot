@@ -5,6 +5,7 @@ import AOS from 'aos'; // Import AOS
 import 'aos/dist/aos.css'; // Import AOS styles
 import Navbar from '../Navbar';
 import Footer from "../../Components/pages/Footer"; // Importing Footer
+import Chatbot from '../Chatbot/Chatbot';
 
 const About = () => {
   // AOS initialization
@@ -56,6 +57,7 @@ const About = () => {
       </div>
 
       {/* Footer */}
+      <Chatbot/>
       <Footer />
     </div>
   );

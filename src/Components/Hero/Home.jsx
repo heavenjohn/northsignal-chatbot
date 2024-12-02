@@ -3,7 +3,8 @@ import 'aos/dist/aos.css';
 import { useEffect } from 'react';
 import logo from "../../assets/logo/North_Signal.png";
 import Navbar from "../../Components/Navbar";
-import Footer from "../../Components/pages/Footer"; // Importing the Footer component
+import Footer from "../../Components/pages/Footer";
+import Chatbot from '../Chatbot/Chatbot';
 
 const Hero = () => {
   // Initialize AOS
@@ -64,8 +65,8 @@ const Hero = () => {
           </div>
         </div>
       </div>
-
       {/* Footer */}
+      <Chatbot/>
     <Footer/>
     </div>
   );
