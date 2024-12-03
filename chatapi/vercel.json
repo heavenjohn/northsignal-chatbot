@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "build":[
+    "builds":[
         {
             "src": "/chatapi/index.js",
             "use": "@vercel/node"
