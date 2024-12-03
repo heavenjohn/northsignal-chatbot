@@ -3,7 +3,6 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AboutUs from './Components/allpages/AboutUs/AboutUs';
-import CustomerSupport from './Components/allpages/CustomerSupport/customersupp';
 import QualityService from './Components/allpages/QualityService/Qaulity';
 import { AuthProvider } from './Components/context/AuthProvider';
 import ProtectedRoute from './Components/context/ProtectedRoute';
@@ -36,7 +35,6 @@ const App = () => {
             <Route path="/official" element={<Contact />} />
             <Route path="/security" element={<Security />} />
             <Route path="/aboutus" element={<AboutUs />} />
-            <Route path="/customersupport" element={<CustomerSupport />} />
             <Route path="/qualityservices" element={<QualityService />} />
             <Route path="/accountsetting" element={<AccountSettings />} />
 
