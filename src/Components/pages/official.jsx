@@ -1,7 +1,7 @@
 import { FaFacebook, FaTwitter } from 'react-icons/fa';
-import img1 from '../../assets/officials/img1.png';
-import Footer from './Footer';
 import Navbar from '../Navbar';
+import Footer from './Footer';
+import Chatbot from '../Chatbot/Chatbot';
 
 const councilors = [
   {
@@ -62,7 +62,7 @@ const CityOfficials = () => {
         <div className="flex flex-col md:flex-row items-center gap-6">
           {/* Left Image Section */}
           <div className="w-full md:w-1/3 flex justify-center">
-            <img src={img1} alt="City Mayor" className="rounded-lg shadow-lg w-48 md:w-56" />
+            <img src='https://via.placeholder.com/150' alt="City Mayor" className="rounded-lg shadow-lg w-48 md:w-56" />
           </div>
 
           {/* Right Info Section */}
@@ -73,7 +73,7 @@ const CityOfficials = () => {
             <p className="text-gray-500 mb-4">City Mayor</p>
 
             <p className="text-gray-700 mb-4">
-              Maria Laarni “Lani” Lopez Cayetano is the Mayor of the City of Taguig. Her career in public service is
+              Maria Laarni <q>Lani</q> Lopez Cayetano is the Mayor of the City of Taguig. Her career in public service is
               marked by the glass ceilings she shattered. At 22, she founded the Progressive Ladies League of the
               Philippines (PLL), an organization that promotes the welfare of women across the country...
             </p>
@@ -112,13 +112,13 @@ const CityOfficials = () => {
 
       {/* Councilors Section */}
       <div className="max-w-7xl mx-auto mb-10 px-4">
-        <h1 className="text-3xl font-bold text-center mb-6">DISTRICT 1 COUNCILORS</h1>
+        <h1 className="text-3xl font-bold text-center mb-6">BARANGAY OFFICALS</h1>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {councilors.map((councilor, index) => (
             <div
               key={index}
-              className="bg-white shadow-lg rounded-lg overflow-hidden text-center p-4"
+              className="bg-white shadow-lg rounded-lg overflow-hidden text-center p-4 hover:shadow-xl hover:bg-gray-50 hover:scale-105 transition-all duration-300"
             >
               <img
                 src={councilor.img}
@@ -133,6 +133,7 @@ const CityOfficials = () => {
       </div>
 
       {/* Footer */}
+      <Chatbot />
       <Footer />
     </div>
   );

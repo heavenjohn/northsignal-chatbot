@@ -41,11 +41,11 @@ const About = () => {
               About Us
             </h1>
             <p className="text-sm sm:text-base lg:text-lg">
-              Welcome to North Signal, where we aim to provide exceptional services and support to our community.
+              Welcome to North Signal!
+
+              At North Signal Village, were dedicated to providing top-notch services and support to our vibrant community. Established in 2009, our mission is to create a safe, inclusive, and thriving environment for all residents. Whether youre seeking community events, local amenities, or support services, were here to make your experience unforgettable.
             </p>
-            <p className="text-sm sm:text-base lg:text-lg">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur sequi corrupti delectus itaque aut dignissimos.
-            </p>
+
             <Link to="/aboutus">
               <button className="bg-primary text-white px-6 py-2 rounded shadow-md hover:bg-opacity-90 transform hover:scale-105 active:scale-95 transition-transform duration-300 mt-5">
                 See More
@@ -57,7 +57,7 @@ const About = () => {
       </div>
 
       {/* Footer */}
-      <Chatbot/>
+      <Chatbot />
       <Footer />
     </div>
   );

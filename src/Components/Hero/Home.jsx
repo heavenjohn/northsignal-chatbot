@@ -19,13 +19,13 @@ const Hero = () => {
     <div className="dark:bg-black dark:text-white duration-300 relative z-20 flex flex-col min-h-screen">
       {/* Navbar */}
       <div className='flex mt-16'>
-      <Navbar />
+        <Navbar />
       </div>
 
       {/* Hero Section */}
       <div className="container mx-auto px-4 sm:px-8 flex-grow flex items-center">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 place-items-center">
-          
+
           {/* Image Section */}
           <div
             data-aos="slide-left"
@@ -58,16 +58,17 @@ const Hero = () => {
               data-aos-delay="1000"
               className="mt-4 text-sm sm:text-base"
             >
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi
-              est inventore architecto eligendi enim officiis, eaque iure itaque
-              eius error fugit eveniet magnam numquam.
+              Welcome to North Signal!
+
+              We are thrilled to have you here. North Signal offers a vibrant community with top-notch amenities and beautiful surroundings. Explore our services and enjoy a fulfilling experience with us. Feel free to reach out for any assistance or inquiries.
+
             </p>
           </div>
         </div>
       </div>
       {/* Footer */}
-      <Chatbot/>
-    <Footer/>
+      <Chatbot />
+      <Footer />
     </div>
   );
 };

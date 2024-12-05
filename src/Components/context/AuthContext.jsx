@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types'; // Import PropTypes for validation
 
 // Create AuthContext
@@ -6,9 +6,15 @@ const AuthContext = createContext();
 
 // AuthProvider component to wrap the application and provide authentication state
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    localStorage.getItem('auth') === 'true'  // Check if user is authenticated on page load
-  );
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    // Check if the user is authenticated when the component is mounted
+    const authStatus = localStorage.getItem('auth');
+    if (authStatus === 'true') {
+      setIsAuthenticated(true);
+    }
+  }, []); // Empty dependency array ensures this runs only once when the component mounts
 
   // Login function to set the user as authenticated
   const login = () => {

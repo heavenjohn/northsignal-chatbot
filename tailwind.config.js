@@ -13,6 +13,9 @@ export default {
         yellow: "#f5c001",
         primaryblue: "#1a4698",
       },
+      fontFamily: {
+        poppins: ['Poppins', 'sans-serif'],
+      },
       container: {
         center: true, // Centers the container
         padding: {

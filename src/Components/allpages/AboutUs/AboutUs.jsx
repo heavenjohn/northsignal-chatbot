@@ -1,5 +1,6 @@
 import Navbar from "../../Navbar";
 import Footer from "../../pages/Footer";
+import Chatbot from "../../Chatbot/Chatbot";
 
 const About = () => {
   return (
@@ -9,111 +10,42 @@ const About = () => {
       <Navbar/>
       </div>
       {/* Hero Section */}
-      <section className="bg-blue text-white py-5">
+      <section className="bg-primaryblue text-white py-5">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl sm:text-5xl font-bold mb-4">About Us</h1>
           <p className="text-base sm:text-lg">
-            Learn about our mission, values, and the team behind our success.
+          Were dedicated to providing top-notch services and creating a thriving community. Established in 2009, were here to make your experience unforgettable with our events, amenities, and support services.
           </p>
         </div>
       </section>
 
       {/* Our Mission */}
-      <section className="py-16 px-6">
-        <div className="max-w-5xl mx-auto text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-6">
-            Our Vision
-          </h2>
-          <p className="text-gray-600 text-base sm:text-lg leading-loose">
-            Our mission is to make the world a better place through innovation
-            and excellence. We strive to empower individuals and organizations
-            to reach their full potential.
-          </p>
-        </div>
-      </section>
+      <section className="py-10 px-6">
+  <div className="max-w-5xl mx-auto text-center">
+    <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-6">
+      Our Mission
+    </h2>
+    <p className="text-gray-600 text-base sm:text-lg leading-loose">
+      North Signal Village aims to enable its Citizenry gain access to Education, Skills and Livelihood Training Sport and other programs that can equip and make them capable of earning an income to help raise their standard of living to live Productive and decent live. and to be able to actively carry out the mandates and ensure transparency, honesty and efficency in the delivery of services in the Barangay.
+    </p>
+  </div>
+</section>
+  <hr className="border-t-2 border-gray-300 my-8" />
+<section className="py-10 pb-20">
+  <div className="max-w-5xl mx-auto text-center">
+    <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-6">
+      Our Vision
+    </h2>
+    <p className="text-gray-600 text-base sm:text-lg leading-loose">
+     Barangay North Signal Village takes pride in its people coming from all over the various regions of the Archipelago, Diverse in the Origin and Culture, but united in its effort, to establish a verdant Community that is peaceful healthy and livable.
+    </p>
+  </div>
+</section>
 
-      {/* Core Values */}
-      <section className="bg-gray-100 py-16 px-6">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 text-center">
-            Our Core Values
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Integrity",
-                description:
-                  "We uphold honesty and strong moral principles in all that we do.",
-              },
-              {
-                title: "Innovation",
-                description:
-                  "We believe in constantly improving and bringing new ideas to life.",
-              },
-              {
-                title: "Community",
-                description:
-                  "We prioritize building a supportive and inclusive community.",
-              },
-            ].map((value, index) => (
-              <div
-                key={index}
-                className="text-center p-6 bg-white shadow-md rounded-lg hover:shadow-lg transition-shadow duration-300"
-              >
-                <h3 className="text-xl font-semibold text-blue-600">
-                  {value.title}
-                </h3>
-                <p className="text-gray-600 mt-2">{value.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* Meet the Team */}
-      <section className="py-16 px-6">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-10 text-center">
-            Meet the Team
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                name: "Jane Doe",
-                role: "CEO & Founder",
-                img: "https://via.placeholder.com/150",
-              },
-              {
-                name: "John Smith",
-                role: "Chief Technical Officer",
-                img: "https://via.placeholder.com/150",
-              },
-              {
-                name: "Emily Davis",
-                role: "Head of Marketing",
-                img: "https://via.placeholder.com/150",
-              },
-            ].map((member, index) => (
-              <div
-                key={index}
-                className="bg-white shadow-md rounded-lg p-6 text-center hover:shadow-lg transition-shadow duration-300"
-              >
-                <img
-                  src={member.img}
-                  alt={`${member.name}`}
-                  className="w-24 h-24 mx-auto rounded-full mb-4"
-                />
-                <h3 className="text-xl font-bold text-gray-800">
-                  {member.name}
-                </h3>
-                <p className="text-gray-600">{member.role}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
+     
       {/* Footer */}
+      <Chatbot/>
       <Footer />
     </div>
   );

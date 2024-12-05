@@ -1,35 +1,38 @@
 import { useState } from "react";
-import Sidebar from "../admin/admin-sidebar"; // Import Sidebar
-import Navbar from "../admin/admin-navbar"; // Import Navbar
-import DashboardCard from "../admin/admin-dasbroadcard"; // Corrected import path
-import { FaUsers } from "react-icons/fa"; // Corrected import for FontAwesome icon
+import Sidebar from "../admin/sidebar"; // Ensure the correct relative path and casing
 
-const Dashboard = () => {
-  // Define the state for the dashboard title
-  const [title, setTitle] = useState("Dashboard");
+const DashboardLayout = () => {
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true); // Toggle sidebar visibility
+  const [pageTitle, setPageTitle] = useState("Dashboard"); // Default page title
 
   return (
-    <div className="flex h-screen">
-      {/* Sidebar Component */}
-      <Sidebar setTitle={setTitle} />
-      
-      {/* Main Content Area */}
-      <div className="flex-1 p-6">
-        {/* Navbar Component */}
-        <Navbar title={title} />
-        
-        <div className="flex-1">
-          <div className="p-6">
-            {/* Grid Layout for Dashboard Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Example Dashboard Card */}
-              <DashboardCard title="Users" icon={<FaUsers />} />
+    <div className="flex flex-col h-screen bg-gray-100 font-poppins">
+      {/* Sidebar and Main Content Container */}
+      <div className="flex flex-grow">
+        {/* Sidebar Component */}
+        <Sidebar
+          isSidebarVisible={isSidebarVisible}
+          setIsSidebarVisible={setIsSidebarVisible}
+          setPageTitle={setPageTitle}
+        />
+
+        {/* Main Content Area */}
+        <main className="flex-grow bg-white p-6">
+          {/* Dynamic Page Title */}
+          <h2 className="text-2xl font-bold mb-4">{pageTitle}</h2>
+
+          {/* Welcome Message (Rendered Only on Dashboard) */}
+          {pageTitle === "Dashboard" && (
+            <div className="bg-gray-50 p-4 rounded-lg shadow">
+              <p>
+                Welcome to the <strong>{pageTitle}</strong>! Use the navigation menu to explore.
+              </p>
             </div>
-          </div>
-        </div>
+          )}
+        </main>
       </div>
     </div>
   );
 };
 
-export default Dashboard;
+export default DashboardLayout;

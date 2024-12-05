@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { FaComments, FaRobot, FaTimes, FaUser } from "react-icons/fa";
 import { ThreeDots } from 'react-loader-spinner'; // Import ThreeDots Spinner
 
@@ -8,6 +8,24 @@ const Chatbot = () => {
   const [chatHistory, setChatHistory] = useState([]);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isModelLoading, setIsModelLoading] = useState(false);
+  const chatBoxRef = useRef(null); // Reference to the chatbox
+
+  // Close chatbot if clicked outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (chatBoxRef.current && !chatBoxRef.current.contains(event.target)) {
+        setIsChatOpen(false); // Close chatbot
+      }
+    };
+
+    // Add event listener
+    document.addEventListener("mousedown", handleClickOutside);
+
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   // Handle AI Chat through backend
   const handleAiChat = async (text) => {
@@ -58,12 +76,15 @@ const Chatbot = () => {
         onClick={() => setIsChatOpen((prev) => !prev)}
         title="Chat with us!"
       >
-        <FaComments size={24} />
+        <FaComments size={30} />
       </div>
 
       {/* Chatbot UI */}
       {isChatOpen && (
-        <div className="fixed bottom-16 right-4 w-80 bg-white border border-gray-300 rounded-lg shadow-lg z-50">
+        <div
+          ref={chatBoxRef} // Attach the ref to the chatbox container
+          className="fixed bottom-16 right-4 w-96 bg-white border border-gray-300 rounded-lg shadow-lg z-50"
+        >
           <div className="bg-blue-600 text-white flex justify-between items-center p-3 rounded-t-lg">
             <h3 className="font-semibold">Chatbot</h3>
             <button

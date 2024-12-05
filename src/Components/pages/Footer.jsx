@@ -1,4 +1,5 @@
 import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -68,7 +69,7 @@ const Footer = () => {
 
         {/* Social Media Icons */}
         <div className="mt-2 flex justify-center space-x-2">
-          <a href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook">
+          <a href="https://www.facebook.com/people/Bagong-North-Signal/61553108162456/" target="_blank" rel="noreferrer" aria-label="Facebook">
             <FaFacebook className="h-4 w-4" />
           </a>
           <a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram">
@@ -85,7 +86,7 @@ const Footer = () => {
         {/* Footer Text */}
         <div className="mt-2 text-center border-t border-white pt-1 text-xs">
           <p>2024 © | North Signal</p>
-          <p>Powered by Heaven John | Current Version: 0.1.5</p>
+          <p> <Link to="/security">Policy</Link> | Current Version: 0.1.5</p>
         </div>
       </div>
     </div>

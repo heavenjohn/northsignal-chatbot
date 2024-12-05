@@ -3,7 +3,6 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AboutUs from './Components/allpages/AboutUs/AboutUs';
-import QualityService from './Components/allpages/QualityService/Qaulity';
 import { AuthProvider } from './Components/context/AuthProvider';
 import ProtectedRoute from './Components/context/ProtectedRoute';
 import LoginForm from './Components/From/Loginform';
@@ -13,7 +12,9 @@ import About from './Components/pages/About';
 import Dashboard from './Components/pages/admin-dashboard';
 import Security from './Components/pages/Security';
 import Contact from './Components/pages/official';
-import AccountSettings from './Components/From/AccountSettings';
+import AddAdmin from "./Components/admin/AddAdminform"
+import AdminList from './Components/admin/AdminList';
+import Ourbrgy from "./Components/pages/OurBrgy"
 
 const App = () => {
   useEffect(() => {
@@ -27,30 +28,32 @@ const App = () => {
   return (
     <AuthProvider>
       <Router>
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={<Home />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/official" element={<Contact />} />
-            <Route path="/security" element={<Security />} />
-            <Route path="/aboutus" element={<AboutUs />} />
-            <Route path="/qualityservices" element={<QualityService />} />
-            <Route path="/accountsetting" element={<AccountSettings />} />
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/official" element={<Contact />} />
+          <Route path="/security" element={<Security />} />
+          <Route path="/aboutus" element={<AboutUs />} />
+          <Route path="/addAdmin" element={<AddAdmin />} />
+          <Route path="/adminList" element={<AdminList />} />
+          <Route path="/ourbrgy" element={<Ourbrgy />} />
 
-            {/* Admin Routes */}
-            <Route path="/admin" element={<LoginForm />} />
-            <Route
-              path="/admin-dashboard"
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            />
-            {/* Catch-all route for undefined pages */}
-            <Route path="*" element={<NotFound />} />`
-          </Routes>
+          {/* Admin Routes */}
+          <Route path="/admin" element={<LoginForm />} />
+          <Route
+            path="/admin-dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Catch-all route for undefined pages */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </Router>
     </AuthProvider>
   );
