@@ -20,6 +20,7 @@
     "firebase": "^11.0.2",
     "firebase-function": "^1.4.121",
     "firebase-tools": "^13.26.0",
+    "framer-motion": "^11.13.1",
     "lucide-react": "^0.464.0",
     "prop-type": "^0.0.1",
     "prop-types": "^15.8.1",
@@ -33,6 +34,7 @@
     "react-paginate": "^8.2.0",
     "react-router-dom": "^6.27.0",
     "react-scroll": "^1.9.0",
+    "react-toastify": "^10.0.6",
     "rechart": "^0.0.1",
     "recharts": "^2.13.3"
   },

@@ -15,6 +15,7 @@ import Contact from './Components/pages/official';
 import AddAdmin from "./Components/admin/AddAdminform"
 import AdminList from './Components/admin/AdminList';
 import Ourbrgy from "./Components/pages/OurBrgy"
+import NewsSection from "./Components/admin/NewsSection"
 
 const App = () => {
   useEffect(() => {
@@ -39,6 +40,7 @@ const App = () => {
           <Route path="/addAdmin" element={<AddAdmin />} />
           <Route path="/adminList" element={<AdminList />} />
           <Route path="/ourbrgy" element={<Ourbrgy />} />
+          <Route path="/newssection" element={<NewsSection />} />
 
           {/* Admin Routes */}
           <Route path="/admin" element={<LoginForm />} />

@@ -49,11 +49,6 @@ function Security() {
             (website.taguig.info), as well as any related sites, platforms, or
             domains used by the City Government of Taguig.
           </p>
-          <div className="flex mt-5" data-aos="fade-up" data-aos-duration="300">
-            <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded dark:bg-red-600 dark:hover:bg-red-800">
-              Read More
-            </button>
-          </div>
         </div>
       </div>
       <Chatbot/>

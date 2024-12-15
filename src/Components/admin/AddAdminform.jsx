@@ -1,84 +1,78 @@
-import { useState } from "react";
-import { db } from "../Firebase/firebaseConfig"; // Firebase configuration
+import { useState, useEffect } from "react";
+import { db, auth } from "../Firebase/firebaseConfig"; // Firebase configuration
 import { collection, addDoc } from "firebase/firestore"; // Firestore functions
+import { createUserWithEmailAndPassword } from "firebase/auth"; // Firebase Authentication
 import Sidebar from "./sidebar"; // Sidebar component
-import { FaUser, FaEnvelope, FaPhone, FaPhotoVideo, FaLock } from "react-icons/fa"; // Icons from react-icons
+import { FaUser, FaEnvelope } from "react-icons/fa"; // Only used icons
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AdminRegistrationForm = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [contactNumber, setContactNumber] = useState("");
-  const [photo, setPhoto] = useState(null); // Photo file
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [address, setAddress] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(false);
-  const [isSidebarVisible, setIsSidebarVisible] = useState(true); // Sidebar visibility
-  const [setPageTitle] = useState("Admin Registration");
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
 
-  // Function to handle submission
+  useEffect(() => {
+    document.title = "Admin Registration";
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError(null);
-    setSuccess(false);
 
-    // Check if passwords match
+    // Validation checks
     if (password !== confirmPassword) {
-      setError("Passwords do not match.");
+      toast.error("Passwords do not match.");
       setLoading(false);
       return;
     }
 
-    // Check if all required fields are filled
-    if (!firstName || !lastName || !email || !contactNumber || !password || !confirmPassword) {
-      setError("Please fill in all fields.");
+    if (!firstName || !lastName || !email || !contactNumber || !address || !password || !confirmPassword) {
+      toast.error("Please fill in all fields.");
       setLoading(false);
       return;
     }
 
     try {
-      // Add new admin to Firestore
+      // Create user in Firebase Authentication
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Add admin details to Firestore
       await addDoc(collection(db, "admins"), {
         firstName,
         lastName,
         email,
         contactNumber,
-        role: "Admin", // Hardcoded as Admin
-        photoURL: photo ? URL.createObjectURL(photo) : null, // Simulate uploading photo
+        address,
+        role: "Admin",
         createdAt: new Date(),
+        uid: user.uid, // Link Firestore record with Authentication user
       });
 
-      // Set success message
-      setSuccess(true);
-      // Reset form fields
+      toast.success("Admin registered successfully!");
       setFirstName("");
       setLastName("");
       setEmail("");
       setContactNumber("");
+      setAddress("");
       setPassword("");
       setConfirmPassword("");
-      setPhoto(null);
-
-      // Auto-hide success message after 4 seconds
-      setTimeout(() => setSuccess(false), 4000);
     } catch (err) {
-      setError("Failed to register admin. Please try again.");
-      setTimeout(() => setError(null), 4000); // Auto-hide error after 4 seconds
-      console.error(err);
+      if (err.code === "auth/email-already-in-use") {
+        toast.error("This email is already in use.");
+      } else {
+        toast.error("Failed to register admin. Please try again.");
+      }
+      console.error("Error during registration:", err);
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handlePhotoChange = (e) => {
-    const file = e.target.files[0];
-    if (file && file.type.startsWith("image/")) {
-      setPhoto(file);
-    } else {
-      setError("Please upload a valid image file.");
     }
   };
 
@@ -88,7 +82,7 @@ const AdminRegistrationForm = () => {
       <Sidebar
         isSidebarVisible={isSidebarVisible}
         setIsSidebarVisible={setIsSidebarVisible}
-        setPageTitle={setPageTitle}
+        setPageTitle={(title) => (document.title = title)}
       />
 
       {/* Main Content */}
@@ -98,141 +92,118 @@ const AdminRegistrationForm = () => {
             Add Admin
           </h2>
 
-          {/* Error or Success Notification with fade-in/fade-out animation */}
-          {error && (
-            <p className="text-red-500 text-sm mb-4 animate-fade-in">{error}</p>
-          )}
-          {success && (
-            <p className="text-green-500 text-sm mb-4 animate-fade-in">
-              Admin registered successfully!
-            </p>
-          )}
-
+          {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* First and Last Name */}
+            {/* First Name and Last Name */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="w-full">
-                <label className="block text-sm font-medium text-gray-700">
+              <div>
+                <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
                   First Name
                 </label>
                 <div className="flex items-center border border-gray-300 rounded-md">
                   <FaUser className="ml-3 text-gray-400" />
                   <input
+                    id="firstName"
                     type="text"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                     required
-                    className="w-full p-3 mt-2 border-0 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full p-3 focus:outline-none"
                   />
                 </div>
               </div>
-
-              <div className="w-full">
-                <label className="block text-sm font-medium text-gray-700">
+              <div>
+                <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">
                   Last Name
                 </label>
                 <div className="flex items-center border border-gray-300 rounded-md">
                   <FaUser className="ml-3 text-gray-400" />
                   <input
+                    id="lastName"
                     type="text"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                     required
-                    className="w-full p-3 mt-2 border-0 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full p-3 focus:outline-none"
                   />
                 </div>
               </div>
             </div>
 
-            {/* Email and Contact Number */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="w-full">
-                <label className="block text-sm font-medium text-gray-700">
-                  Email
-                </label>
-                <div className="flex items-center border border-gray-300 rounded-md">
-                  <FaEnvelope className="ml-3 text-gray-400" />
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    className="w-full p-3 mt-2 border-0 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-              </div>
-
-              <div className="w-full">
-                <label className="block text-sm font-medium text-gray-700">
-                  Contact Number
-                </label>
-                <div className="flex items-center border border-gray-300 rounded-md">
-                  <FaPhone className="ml-3 text-gray-400" />
-                  <input
-                    type="tel"
-                    value={contactNumber}
-                    onChange={(e) => setContactNumber(e.target.value)}
-                    required
-                    className="w-full p-3 mt-2 border-0 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Photo Upload */}
+            {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Upload Photo
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                Email
               </label>
-              <div className="flex items-center border border-gray-300 rounded-md p-3">
-                <FaPhotoVideo className="text-gray-400 mr-3" />
+              <div className="flex items-center border border-gray-300 rounded-md">
+                <FaEnvelope className="ml-3 text-gray-400" />
                 <input
-                  type="file"
-                  onChange={handlePhotoChange}
-                  accept="image/*"
-                  className="w-full focus:outline-none"
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="w-full p-3 focus:outline-none"
                 />
               </div>
-              {photo && (
-                <div className="mt-4">
-                  <img
-                    src={URL.createObjectURL(photo)}
-                    alt="Preview"
-                    className="h-24 w-24 rounded-full object-cover mx-auto"
-                  />
-                </div>
-              )}
+            </div>
+
+            {/* Contact Number */}
+            <div>
+              <label htmlFor="contactNumber" className="block text-sm font-medium text-gray-700">
+                Contact Number
+              </label>
+              <input
+                id="contactNumber"
+                type="text"
+                value={contactNumber}
+                onChange={(e) => setContactNumber(e.target.value)}
+                required
+                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none"
+              />
+            </div>
+
+            {/* Address */}
+            <div>
+              <label htmlFor="address" className="block text-sm font-medium text-gray-700">
+                Address
+              </label>
+              <input
+                id="address"
+                type="text"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                required
+                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none"
+              />
             </div>
 
             {/* Password and Confirm Password */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Password
-              </label>
-              <div className="flex items-center border border-gray-300 rounded-md">
-                <FaLock className="ml-3 text-gray-400" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                  Password
+                </label>
                 <input
+                  id="password"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="w-full p-3 mt-2 border-0 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-3 border border-gray-300 rounded-md focus:outline-none"
                 />
               </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Confirm Password
-              </label>
-              <div className="flex items-center border border-gray-300 rounded-md">
-                <FaLock className="ml-3 text-gray-400" />
+              <div>
+                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+                  Confirm Password
+                </label>
                 <input
+                  id="confirmPassword"
                   type="password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
-                  className="w-full p-3 mt-2 border-0 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-3 border border-gray-300 rounded-md focus:outline-none"
                 />
               </div>
             </div>
@@ -241,44 +212,20 @@ const AdminRegistrationForm = () => {
             <div className="mt-6">
               <button
                 type="submit"
-                className={`w-full p-3 bg-blue-600 text-white rounded-md font-semibold transition-colors ${
+                className={`w-full p-3 bg-primary text-white rounded-md font-semibold ${
                   loading ? "bg-gray-500 cursor-not-allowed" : "hover:bg-blue-700"
                 }`}
                 disabled={loading}
               >
-                {loading ? (
-                  <span className="flex items-center justify-center">
-                    <svg
-                      className="animate-spin h-5 w-5 mr-3 text-white"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                      ></circle>
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 0116 0A8 8 0 014 12z"
-                      ></path>
-                    </svg>
-                    Registering...
-                  </span>
-                ) : (
-                  "Submit"
-                )}
+                {loading ? "Registering..." : "Register Admin"}
               </button>
             </div>
           </form>
         </div>
       </main>
+
+      {/* Toast Notification */}
+      <ToastContainer />
     </div>
   );
 };

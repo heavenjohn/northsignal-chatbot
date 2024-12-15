@@ -5,43 +5,43 @@ import Chatbot from '../Chatbot/Chatbot';
 
 const councilors = [
   {
-    name: 'Person',
-    title: '1',
+    name: 'Danilo Castro',
+    title: 'BRGY. CAPITAN',
     img: 'https://via.placeholder.com/150',
   },
   {
-    name: 'Person',
-    title: '1',
+    name: 'Jimmy Gomez',
+    title: 'KAGAWAD',
     img: 'https://via.placeholder.com/150',
   },
   {
-    name: 'Person',
-    title: '1',
+    name: 'Jojo Quijano',
+    title: 'KAGAWAD',
     img: 'https://via.placeholder.com/150',
   },
   {
-    name: 'Person',
-    title: '1',
+    name: 'Ric Jordan',
+    title: 'KAGAWAD',
     img: 'https://via.placeholder.com/150',
   },
   {
-    name: 'Person',
-    title: '1',
+    name: 'Jonas Barca',
+    title: 'KAGAWAD',
     img: 'https://via.placeholder.com/150',
   },
   {
-    name: 'Person',
-    title: '1',
+    name: 'Yolly Velasco',
+    title: 'KAGAWAD',
     img: 'https://via.placeholder.com/150',
   },
   {
-    name: 'Person',
-    title: 'Councilor',
+    name: 'Ronald Ramirez',
+    title: 'KAGAWAD',
     img: 'https://via.placeholder.com/150',
   },
   {
-    name: 'Person',
-    title: 'Councilor',
+    name: 'Irene Ingco',
+    title: 'KAGAWAD',
     img: 'https://via.placeholder.com/150',
   },
 ];
