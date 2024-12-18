@@ -1,6 +1,6 @@
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import logo from "../../assets/logo/North_Signal.png";
 import Navbar from "../../Components/Navbar";
 import Footer from "../../Components/pages/Footer";
@@ -8,8 +8,11 @@ import Chatbot from "../Chatbot/Chatbot";
 import { db } from "../Firebase/firebaseConfig";
 import { collection, onSnapshot } from "firebase/firestore";
 
+
 const Hero = () => {
   const [announcements, setAnnouncements] = useState([]);
+  const [selectedAnnouncement, setSelectedAnnouncement] = useState(null);
+  const modalRef = useRef(null); // Ref for the modal
 
   useEffect(() => {
     // Initialize AOS once the component mounts
@@ -21,11 +24,32 @@ const Hero = () => {
 
   useEffect(() => {
     const unsub = onSnapshot(collection(db, "announcements"), (snapshot) => {
-      // Fetch titles and other data for announcements
       setAnnouncements(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
     });
     return () => unsub();
   }, []);
+
+  useEffect(() => {
+    // Close modal if clicked outside of it
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        setSelectedAnnouncement(null);
+      }
+    };
+
+    // Add event listener
+    document.addEventListener("mousedown", handleClickOutside);
+
+    // Cleanup event listener
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const openModal = (announcement) => {
+    setSelectedAnnouncement(announcement);
+  };
+
 
   return (
     <div className="dark:bg-black dark:text-white duration-300 relative z-20 flex flex-col min-h-screen">
@@ -63,7 +87,7 @@ const Hero = () => {
               data-aos-delay="1000"
               className="mt-4 text-sm sm:text-base"
             >
-              Welcome to North Signal! Were thrilled to have you here. Explore our vibrant
+              Welcome to North Signal! We&apos;re thrilled to have you here. Explore our vibrant
               community and discover the services we offer.
             </p>
           </div>
@@ -82,7 +106,8 @@ const Hero = () => {
             announcements.map((announcement) => (
               <div
                 key={announcement.id}
-                className="bg-white rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105"
+                onClick={() => openModal(announcement)}
+                className="cursor-pointer bg-white rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105"
                 data-aos="fade-up"
               >
                 {announcement.imageUrl && (
@@ -95,13 +120,10 @@ const Hero = () => {
                   </div>
                 )}
                 <div className="p-6">
-                  {/* Displaying the title of the announcement */}
                   <h2 className="text-lg font-bold text-gray-800 mb-2">
-                    {announcement.title || "Announcement"} {/* Default to "Announcement" if no title */}
+                    {announcement.title || "Announcement"}
                   </h2>
-                  <p className="text-gray-600 text-sm line-clamp-3">
-                    {announcement.text}
-                  </p>
+                  <p className="text-gray-600 text-sm line-clamp-3">{announcement.text}</p>
                 </div>
               </div>
             ))
@@ -112,6 +134,29 @@ const Hero = () => {
           )}
         </div>
       </div>
+
+      {/* Modal */}
+      {selectedAnnouncement && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div
+            ref={modalRef}
+            className="bg-white rounded-lg p-6 w-full max-w-lg relative"
+          >
+            {/* Use React Icon for the close button */}
+            {selectedAnnouncement.imageUrl && (
+              <img
+                src={selectedAnnouncement.imageUrl}
+                alt={selectedAnnouncement.title}
+                className="w-full h-48 object-cover rounded-md mb-4"
+              />
+            )}
+            <h2 className="text-xl font-bold text-gray-800 mb-2">
+              {selectedAnnouncement.title}
+            </h2>
+            <p className="text-gray-600">{selectedAnnouncement.text}</p>
+          </div>
+        </div>
+      )}
 
       {/* Chatbot and Footer */}
       <div className="mt-8">

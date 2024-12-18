@@ -71,7 +71,7 @@ const Chatbot = () => {
   return (
     <div>
       {/* Chatbot Icon */}
-      <div
+      <div  
         className="fixed bottom-4 right-4 bg-blue-600 text-white p-3 rounded-full shadow-lg cursor-pointer flex items-center justify-center"
         onClick={() => setIsChatOpen((prev) => !prev)}
         title="Chat with us!"
