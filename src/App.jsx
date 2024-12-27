@@ -63,14 +63,7 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-          <Route
-            path="/admin/corpus"
-            element={
-              <ProtectedRoute>
-                <Corpus />
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/admin/corpus" element={<Corpus />} />
 
           {/* Catch-all route for undefined pages */}
           <Route path="*" element={<NotFound />} />
