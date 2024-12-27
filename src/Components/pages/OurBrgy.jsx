@@ -8,7 +8,7 @@ const HistorySection = () => {
     <div className="mb-16">
         <Navbar />
       </div>
-      <section className="py-12 px-4 md:px-16 bg-white text-gray-900">
+      <section className="py-5 px-4 md:px-16 bg-white text-gray-900">
         <div className="container mx-auto">
           {/* Section Title */}
           <h2 className="text-4xl font-extrabold text-center mb-8 text-gray-800">

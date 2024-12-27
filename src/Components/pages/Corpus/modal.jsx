@@ -1,5 +1,6 @@
+/* eslint-disable react/prop-types */
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import Swal from "sweetalert2";
 

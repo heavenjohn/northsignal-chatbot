@@ -2,6 +2,7 @@ import { FaFacebook, FaTwitter } from 'react-icons/fa';
 import Navbar from '../Navbar';
 import Footer from './Footer';
 import Chatbot from '../Chatbot/Chatbot';
+import img1 from "../../assets/officials/img1.png"
 
 const councilors = [
   {
@@ -53,16 +54,25 @@ const CityOfficials = () => {
       <div className="mb-16">
         <Navbar />
       </div>
+        <div className='py-5 px-4 md:px-16'>
+          <div className='container max-auto'>
+        <h2 className="text-4xl font-extrabold text-center mb-8 text-gray-800">
+            Our Barangay Leaders 
+          </h2>
+          <h3 className="text-3xl font-semibold text-center mb-6">
+             Barangay Officials
+          </h3>
+        </div>
 
+          </div>
       {/* Mayor Section */}
       <div className="max-w-5xl mx-auto bg-white shadow-lg p-6 rounded-lg mb-10">
-        <h1 className="text-4xl font-bold text-center mb-4">Our Leaders</h1>
-        <h2 className="text-2xl font-semibold text-center mb-6">CITY OFFICIALS</h2>
+
 
         <div className="flex flex-col md:flex-row items-center gap-6">
           {/* Left Image Section */}
           <div className="w-full md:w-1/3 flex justify-center">
-            <img src='https://via.placeholder.com/150' alt="City Mayor" className="rounded-lg shadow-lg w-48 md:w-56" />
+            <img src={img1} alt="City Mayor" className="rounded-lg shadow-lg w-48 md:w-56" />
           </div>
 
           {/* Right Info Section */}

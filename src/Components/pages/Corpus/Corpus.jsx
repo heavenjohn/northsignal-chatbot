@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
-import Sidebar from "../../admin/sidebar"; // Ensure the correct relative path and casing
+import Sidebar from "../../admin/Sidebar"; // Ensure the correct relative path and casing
 import { motion } from "framer-motion"; // Import from Framer Motion
 import ReactPaginate from "react-paginate";
 import { FaEdit, FaEye, FaPlus, FaPowerOff, FaTrash } from "react-icons/fa";

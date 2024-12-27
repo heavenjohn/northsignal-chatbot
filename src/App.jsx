@@ -16,7 +16,7 @@ import AddAdmin from "./Components/admin/AddAdminform";
 import AdminList from "./Components/admin/AdminList";
 import Ourbrgy from "./Components/pages/OurBrgy";
 import NewsSection from "./Components/admin/NewsSection";
-import Sidebar from "./Components/admin/Sidebar"; // Make sure the import is correct
+import Sidebar from "./Components/admin/Sidebar";
 import Corpus from "./Components/pages/Corpus/Corpus";
 
 const App = () => {

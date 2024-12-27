@@ -7,6 +7,7 @@ import {
   FaArrowLeft,
   FaSignOutAlt,
   FaRegNewspaper,
+  FaRobot
 } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
