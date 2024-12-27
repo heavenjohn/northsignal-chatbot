@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useRef, useEffect } from "react";
 import { FaComments, FaRobot, FaTimes, FaUser } from "react-icons/fa";
-import { ThreeDots } from 'react-loader-spinner'; // Import ThreeDots Spinner
+import { ThreeDots } from "react-loader-spinner"; // Import ThreeDots Spinner
 
 const Chatbot = () => {
   const [userInput, setUserInput] = useState("");
@@ -12,7 +12,7 @@ const Chatbot = () => {
 
   // Close chatbot if clicked outside
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = event => {
       if (chatBoxRef.current && !chatBoxRef.current.contains(event.target)) {
         setIsChatOpen(false); // Close chatbot
       }
@@ -28,10 +28,12 @@ const Chatbot = () => {
   }, []);
 
   // Handle AI Chat through backend
-  const handleAiChat = async (text) => {
+  const handleAiChat = async text => {
     try {
-      const response = await axios.post("http://localhost:3000/api/nlp", { text });
-      return response?.data?.answer || "Sorry, I couldn't process your request.";
+      const response = await axios.post("/api/nlp", { text });
+      return (
+        response?.data?.answer || "Sorry, I couldn't process your request."
+      );
     } catch (error) {
       console.error("Error communicating with AI:", error);
       return "Sorry, there was a problem connecting to the server.";
@@ -39,13 +41,13 @@ const Chatbot = () => {
   };
 
   // Handle user input submission
-  const handleFormSubmit = async (event) => {
+  const handleFormSubmit = async event => {
     event.preventDefault();
 
     if (!userInput.trim()) return;
 
     // Add user input to chat history
-    setChatHistory((prevHistory) => [
+    setChatHistory(prevHistory => [
       ...prevHistory,
       { user: userInput, bot: null },
     ]);
@@ -56,7 +58,7 @@ const Chatbot = () => {
       const botResponse = await handleAiChat(userInput);
 
       // Update the last message with bot response
-      setChatHistory((prevHistory) => {
+      setChatHistory(prevHistory => {
         const updatedHistory = [...prevHistory];
         updatedHistory[updatedHistory.length - 1].bot = botResponse;
         return updatedHistory;
@@ -73,9 +75,8 @@ const Chatbot = () => {
       {/* Chatbot Icon */}
       <div
         className="fixed bottom-4 right-4 bg-blue-600 text-white p-3 rounded-full shadow-lg cursor-pointer flex items-center justify-center"
-        onClick={() => setIsChatOpen((prev) => !prev)}
-        title="Chat with us!"
-      >
+        onClick={() => setIsChatOpen(prev => !prev)}
+        title="Chat with us!">
         <FaComments size={30} />
       </div>
 
@@ -83,15 +84,13 @@ const Chatbot = () => {
       {isChatOpen && (
         <div
           ref={chatBoxRef} // Attach the ref to the chatbox container
-          className="fixed bottom-16 right-4 w-96 bg-white border border-gray-300 rounded-lg shadow-lg z-50"
-        >
+          className="fixed bottom-16 right-4 w-96 bg-white border border-gray-300 rounded-lg shadow-lg z-50">
           <div className="bg-blue-600 text-white flex justify-between items-center p-3 rounded-t-lg">
             <h3 className="font-semibold">Chatbot</h3>
             <button
               className="text-xl hover:text-gray-200"
               onClick={() => setIsChatOpen(false)}
-              aria-label="Close chatbot"
-            >
+              aria-label="Close chatbot">
               <FaTimes />
             </button>
           </div>
@@ -130,13 +129,17 @@ const Chatbot = () => {
                         <FaRobot />
                       </div>
                       <div className="bg-gray-100 text-gray-800 px-4 py-2 rounded-r-lg rounded-tl-lg max-w-xs shadow">
-                        <ThreeDots 
-                          height="40" 
-                          width="40" 
-                          color="#1a4698" 
-                          radius="9" 
+                        <ThreeDots
+                          height="40"
+                          width="40"
+                          color="#1a4698"
+                          radius="9"
                           ariaLabel="three-dots-loading"
-                          wrapperStyle={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} 
+                          wrapperStyle={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
                         />
                       </div>
                     </div>
@@ -146,20 +149,24 @@ const Chatbot = () => {
             )}
           </div>
 
-          <form onSubmit={handleFormSubmit} className="flex items-center p-3 border-t">
+          <form
+            onSubmit={handleFormSubmit}
+            className="flex items-center p-3 border-t">
             <input
               type="text"
               value={userInput}
-              onChange={(e) => setUserInput(e.target.value)}
+              onChange={e => setUserInput(e.target.value)}
               placeholder="Ask something..."
               className="flex-grow border border-gray-300 rounded-lg px-3 py-2 mr-2 text-sm"
             />
             <button
               type="submit"
               disabled={isModelLoading}
-              className={`px-4 py-2 rounded-lg text-white ${isModelLoading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600"
-                }`}
-            >
+              className={`px-4 py-2 rounded-lg text-white ${
+                isModelLoading
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-600"
+              }`}>
               {isModelLoading ? "Loading..." : "Send"}
             </button>
           </form>

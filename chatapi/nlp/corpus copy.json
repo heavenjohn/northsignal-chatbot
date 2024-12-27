@@ -3,7 +3,7 @@
   "locale": "en",
   "data": [
     {
-      "intent": "greetings",
+      "intent": "greeting",
       "utterances": [
         "Hi",
         "How are you?",
@@ -1671,6 +1671,18 @@
         "The fee for a Solo Parent Barangay ID Cardboard is exempted."
       ],
       "id": 168
+    },
+    {
+      "intent": "Solo_Parent_Barangay_ID_Cardboard_Fee_Exemption_Tagalog",
+      "utterances": [
+        "May bayad ba ang Barangay ID Cardboard ng Solo Parent?",
+        "Magkano ang halaga ng Barangay ID Cardboard para sa Solo Parent?",
+        "Puwede bang makuha ng Solo Parent ang Barangay ID Cardboard ng libre?"
+      ],
+      "answers": [
+        "Ang fee para sa Barangay ID Cardboard ng Solo Parent ay exempted."
+      ],
+      "id": 169
     }
   ]
 }

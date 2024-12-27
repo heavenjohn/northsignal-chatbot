@@ -7,8 +7,23 @@ const app = express();
 const PORT = 3000;
 
 app.use(bodyParser.json());
-app.use(cors());
 
+const corsConfig = {
+  origin: ["http://localhost:5173"], // Do not use wildcard`
+  methods: ["GET", "POST", "PUT", "DELETE"], // List only` available methods
+  credentials: true, // Must be set to true
+  allowedHeaders: [
+    "Origin",
+    "Content-Type",
+    "X-Requested-With",
+    "x-xsrf-token",
+    "Accept",
+    "Authorization",
+  ], // Allowed Headers to be received
+};
+app.use(cors(corsConfig));
+
+require("./routes")(app);
 app.post("/api/nlp", async (req, res) => {
   const { text } = req.body;
 

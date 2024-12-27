@@ -1,5 +1,14 @@
 import { useState } from "react";
-import { FaTachometerAlt, FaUsers, FaChevronDown, FaBars, FaArrowLeft, FaSignOutAlt, FaRegNewspaper } from "react-icons/fa";
+import {
+  FaTachometerAlt,
+  FaUsers,
+  FaChevronDown,
+  FaBars,
+  FaArrowLeft,
+  FaSignOutAlt,
+  FaRegNewspaper,
+  FaRobot,
+} from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
 import PropTypes from "prop-types";
@@ -30,8 +39,7 @@ const Sidebar = ({ isSidebarVisible, setIsSidebarVisible, setPageTitle }) => {
     <aside
       className={`${
         isSidebarVisible ? "w-64" : "w-16"
-      } bg-blue-900 text-white h-screen flex flex-col transition-all duration-300`}
-    >
+      } bg-blue-900 text-white h-screen flex flex-col transition-all duration-300`}>
       <div className="flex items-center justify-between h-16 px-4 bg-blue-800 shadow">
         {isSidebarVisible && (
           <h1 className="text-lg font-semibold whitespace-nowrap">Dashboard</h1>
@@ -39,8 +47,7 @@ const Sidebar = ({ isSidebarVisible, setIsSidebarVisible, setPageTitle }) => {
         <button
           onClick={() => setIsSidebarVisible(!isSidebarVisible)}
           className="text-white p-2 rounded-full hover:bg-blue-700 transition"
-          title={isSidebarVisible ? "Collapse Sidebar" : "Expand Sidebar"}
-        >
+          title={isSidebarVisible ? "Collapse Sidebar" : "Expand Sidebar"}>
           {isSidebarVisible ? <FaArrowLeft /> : <FaBars />}
         </button>
       </div>
@@ -51,8 +58,7 @@ const Sidebar = ({ isSidebarVisible, setIsSidebarVisible, setPageTitle }) => {
             <Link
               to="/admin-dashboard"
               className="flex items-center px-4 py-3 hover:bg-blue-700 rounded-md transition"
-              onClick={() => setPageTitle("Dashboard")}
-            >
+              onClick={() => setPageTitle("Dashboard")}>
               <FaTachometerAlt className="text-lg" />
               {isSidebarVisible && <span className="ml-4">Dashboard</span>}
             </Link>
@@ -60,8 +66,7 @@ const Sidebar = ({ isSidebarVisible, setIsSidebarVisible, setPageTitle }) => {
           <li>
             <div
               className="flex items-center justify-between px-4 py-3 hover:bg-blue-700 rounded-md cursor-pointer transition"
-              onClick={() => setIsAdminDropdownOpen(!isAdminDropdownOpen)}
-            >
+              onClick={() => setIsAdminDropdownOpen(!isAdminDropdownOpen)}>
               <div className="flex items-center">
                 <FaUsers className="text-lg" />
                 {isSidebarVisible && <span className="ml-4">Admin</span>}
@@ -80,8 +85,7 @@ const Sidebar = ({ isSidebarVisible, setIsSidebarVisible, setPageTitle }) => {
                   <Link
                     to="/adminList"
                     className="text-sm text-gray-300 hover:text-white transition"
-                    onClick={() => setPageTitle("Admin List")}
-                  >
+                    onClick={() => setPageTitle("Admin List")}>
                     Admin List
                   </Link>
                 </li>
@@ -89,8 +93,7 @@ const Sidebar = ({ isSidebarVisible, setIsSidebarVisible, setPageTitle }) => {
                   <Link
                     to="/addAdmin"
                     className="text-sm text-gray-300 hover:text-white transition"
-                    onClick={() => setPageTitle("Add Admin")}
-                  >
+                    onClick={() => setPageTitle("Add Admin")}>
                     Add Admin
                   </Link>
                 </li>
@@ -101,10 +104,18 @@ const Sidebar = ({ isSidebarVisible, setIsSidebarVisible, setPageTitle }) => {
             <Link
               to="/newssection"
               className="flex items-center px-4 py-3 hover:bg-blue-700 rounded-md transition"
-              onClick={() => setPageTitle("News Section")}
-            >
+              onClick={() => setPageTitle("News Section")}>
               <FaRegNewspaper className="text-lg" />
               {isSidebarVisible && <span className="ml-4">News Section</span>}
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/admin/corpus"
+              className="flex items-center px-4 py-3 hover:bg-blue-700 rounded-md transition"
+              onClick={() => setPageTitle("Admin Train ai")}>
+              <FaRobot className="text-lg" />
+              {isSidebarVisible && <span className="ml-4">Admin Train ai</span>}
             </Link>
           </li>
         </ul>
@@ -114,8 +125,7 @@ const Sidebar = ({ isSidebarVisible, setIsSidebarVisible, setPageTitle }) => {
         <ul>
           <li
             className="flex items-center px-4 py-3 hover:bg-blue-700 rounded-md transition cursor-pointer"
-            onClick={signOutHandler}
-          >
+            onClick={signOutHandler}>
             <FaSignOutAlt className="text-lg" />
             {isSidebarVisible && <span className="ml-4">Logout</span>}
             {loading && <span className="ml-2 text-sm">Signing out...</span>}
