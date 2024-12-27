@@ -1,5 +1,5 @@
 const fs = require("fs");
-const { initializeNlp } = require("../nlp/manager");
+const { initializeNlp, retrained } = require("../nlp/manager");
 const { log } = require("console");
 const filePath = "./nlp/corpus.json";
 
@@ -66,7 +66,8 @@ exports.update = (req, res) => {
   });
 };
 exports.restart = async (req, res) => {
-  await initializeNlp();
+  // await initializeNlp();
+  await retrained();
   res.json({ success: "NLP restarted" });
 };
 exports.destoy = (req, res) => {
