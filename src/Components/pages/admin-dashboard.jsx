@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import Sidebar from "../admin/sidebar"; // Ensure the correct relative path and casing
-import AdminDashboardCard from "../admin/admin-dasbroadcard";
+import Sidebar from "../admin/Sidebar"; // Ensure correct relative path and casing
+import AdminDashboardCard from "../admin/admin-dasbroadcard"; // Correct import path
 import { motion } from "framer-motion"; // Import from Framer Motion
 
 const DashboardLayout = () => {
@@ -32,35 +32,40 @@ const DashboardLayout = () => {
       ) : (
         // Main Content After Loading
         <div className="flex flex-grow">
-          {/* Sidebar Component */}
+          {/* Sidebar component */}
           <Sidebar
             isSidebarVisible={isSidebarVisible}
             setIsSidebarVisible={setIsSidebarVisible}
             setPageTitle={setPageTitle}
           />
 
-          {/* Main Content Area */}
-          <main className="flex-grow bg-white p-6">
+          {/* Main Content */}
+          <div
+            className={`flex-1 p-6 transition-all duration-300 ease-in-out ${
+              isSidebarVisible ? "ml-64" : "ml-16"
+            }`}
+          >
             {/* Dynamic Page Title */}
-            <h2 className="text-2xl font-bold mb-4">{pageTitle}</h2>
+            <h2 className="text-3xl font-bold mb-4 text-gray-800">{pageTitle}</h2>
 
             {/* Welcome Message */}
             {pageTitle === "Dashboard" && (
               <>
-                <div className="bg-gray-50 p-4 rounded-lg shadow mb-6">
-                  <p>
-                    Welcome to the <strong>{pageTitle}</strong>! Use the navigation menu to explore.
+                <div className="bg-white p-6 rounded-lg shadow-lg mb-8">
+                  <p className="text-gray-700">
+                    Welcome to the <strong>{pageTitle}</strong>! Use the
+                    navigation menu to explore.
                   </p>
                 </div>
 
                 {/* Admin Dashboard Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                   <AdminDashboardCard />
                   {/* Add more cards as needed */}
                 </div>
               </>
             )}
-          </main>
+          </div>
         </div>
       )}
     </div>

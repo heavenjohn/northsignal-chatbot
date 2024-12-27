@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -16,9 +16,12 @@ import AddAdmin from "./Components/admin/AddAdminform";
 import AdminList from "./Components/admin/AdminList";
 import Ourbrgy from "./Components/pages/OurBrgy";
 import NewsSection from "./Components/admin/NewsSection";
+import Sidebar from "./Components/admin/Sidebar"; // Make sure the import is correct
 import Corpus from "./Components/pages/Corpus/Corpus";
 
 const App = () => {
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true); // Sidebar visibility state
+
   useEffect(() => {
     AOS.init({
       offset: 100,
@@ -42,6 +45,7 @@ const App = () => {
           <Route path="/adminList" element={<AdminList />} />
           <Route path="/ourbrgy" element={<Ourbrgy />} />
           <Route path="/newssection" element={<NewsSection />} />
+          <Route path="/admin-dashboard" element={<Dashboard />} />
 
           {/* Admin Routes */}
           <Route path="/admin" element={<LoginForm />} />
@@ -49,7 +53,13 @@ const App = () => {
             path="/admin-dashboard"
             element={
               <ProtectedRoute>
-                <Dashboard />
+                <div className="flex">
+                  <Sidebar
+                    isSidebarVisible={isSidebarVisible}
+                    setIsSidebarVisible={setIsSidebarVisible}
+                    setPageTitle={() => {}} // Remove the function if it's not needed
+                  />
+                </div>
               </ProtectedRoute>
             }
           />

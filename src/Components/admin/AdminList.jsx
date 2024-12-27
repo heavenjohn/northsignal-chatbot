@@ -5,7 +5,7 @@ import ReactPaginate from "react-paginate";
 import { toast } from "react-toastify"; 
 import 'react-toastify/dist/ReactToastify.css';
 import { db } from "../Firebase/firebaseConfig";
-import Sidebar from "./sidebar";
+import Sidebar from "./Sidebar";
 
 const AdminList = () => {
   const [admins, setAdmins] = useState([]);
@@ -17,7 +17,7 @@ const AdminList = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [modalType, setModalType] = useState("");
-  const [pageTitle, setPageTitle] = useState("Admin List"); // Add pageTitle state
+  const [pageTitle, setPageTitle] = useState("Admin List");
 
   const adminsPerPage = 10;
   const [editForm, setEditForm] = useState({
@@ -61,8 +61,9 @@ const AdminList = () => {
     }, 500);
     return () => clearTimeout(timer);
   }, [searchTerm]);
+
   useEffect(() => {
-    document.title = pageTitle;  // Update the document title
+    document.title = pageTitle; 
   }, [pageTitle]);
 
   const filteredAdmins = admins.filter(
@@ -151,14 +152,11 @@ const AdminList = () => {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100 justify-between">
-    <Sidebar 
-      isSidebarVisible={isSidebarVisible} 
-      setIsSidebarVisible={setIsSidebarVisible} 
-      setPageTitle={setPageTitle}  // Pass the function to Sidebar
-    />
-      <div className={`flex-grow p-6 transition-all duration-300 ${isSidebarVisible ? "ml-5" : "ml-5"}`}>
-        <div className="max-w-7xl w-full mx-auto bg-white p-6 rounded-lg shadow-lg mt-10">
+    <div className="flex h-screen bg-gray-100 justify-between flex-wrap md:flex-nowrap">
+      <Sidebar isSidebarVisible={isSidebarVisible} setIsSidebarVisible={setIsSidebarVisible} setPageTitle={setPageTitle} />
+      {/* Main Content */}
+      <div className={`flex-1 p-6 ${isSidebarVisible ? 'ml-64' : 'ml-16'} transition-all`}>
+        <div className="w-full max-w-7xl mx-auto bg-white p-6 rounded-lg shadow-lg mt-10">
           <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800">Admin List</h2>
           {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
 
@@ -171,7 +169,7 @@ const AdminList = () => {
             </div>
           ) : (
             <>
-              <div className="mb-4 flex justify-between items-center">
+              <div className="mb-4 flex justify-between items-center flex-wrap">
                 <div className="text-gray-700 font-semibold">Total Admins: {filteredAdmins.length} / {admins.length}</div>
                 <div className="flex space-x-2 w-full sm:w-1/3 lg:w-1/4">
                   <input
@@ -224,8 +222,8 @@ const AdminList = () => {
                 marginPagesDisplayed={2}
                 pageRangeDisplayed={5}
                 onPageChange={handlePageClick}
-                containerClassName={"flex justify-center items-center space-x-2"}
-                pageClassName={"py-1 px-2 bg-primary border rounded-md text-"}
+                containerClassName={"flex justify-center items-center space-x-2 mt-4"}
+                pageClassName={"py-1 px-2 bg-primary border rounded-md text-sm"}
                 activeClassName={"bg-blue-500 text-white"}
                 disabledClassName={"text-gray-400 cursor-not-allowed"}
               />
@@ -319,19 +317,45 @@ const AdminList = () => {
                       className="w-full p-2 border border-gray-300 rounded-md"
                     />
                   </div>
-                  <div className="flex justify-end space-x-2">
-                    <button onClick={handleSaveEdit} className="bg-green-500 text-white p-2 rounded-md">Save</button>
-                    <button onClick={closeModal} className="bg-gray-500 text-white p-2 rounded-md">Close</button>
+                  <div className="flex justify-between">
+                    <button
+                      onClick={handleSaveEdit}
+                      className="px-4 py-2 bg-blue-600 text-white rounded-md"
+                    >
+                      Save Changes
+                    </button>
+                    <button
+                      onClick={closeModal}
+                      className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md"
+                    >
+                      Cancel
+                    </button>
                   </div>
                 </div>
               ) : (
-                <div>
-                  <p><strong>Name:</strong> {selectedAdmin.firstName} {selectedAdmin.lastName}</p>
-                  <p><strong>Email:</strong> {selectedAdmin.email}</p>
-                  <p><strong>Contact Number:</strong> {selectedAdmin.contactNumber}</p>
-                  <p><strong>Address:</strong> {selectedAdmin.address}</p>
-                  <div className="flex justify-end">
-                    <button onClick={closeModal} className="bg-gray-500 text-white p-2 rounded-md">Close</button>
+                <div className="space-y-4">
+                  <div>
+                    <strong>First Name:</strong> {selectedAdmin.firstName}
+                  </div>
+                  <div>
+                    <strong>Last Name:</strong> {selectedAdmin.lastName}
+                  </div>
+                  <div>
+                    <strong>Email:</strong> {selectedAdmin.email}
+                  </div>
+                  <div>
+                    <strong>Contact Number:</strong> {selectedAdmin.contactNumber}
+                  </div>
+                  <div>
+                    <strong>Address:</strong> {selectedAdmin.address}
+                  </div>
+                  <div className="flex justify-end space-x-2">
+                    <button
+                      onClick={closeModal}
+                      className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md"
+                    >
+                      Close
+                    </button>
                   </div>
                 </div>
               )}

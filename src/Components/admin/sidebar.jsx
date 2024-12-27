@@ -7,7 +7,6 @@ import {
   FaArrowLeft,
   FaSignOutAlt,
   FaRegNewspaper,
-  FaRobot,
 } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
@@ -39,7 +38,7 @@ const Sidebar = ({ isSidebarVisible, setIsSidebarVisible, setPageTitle }) => {
     <aside
       className={`${
         isSidebarVisible ? "w-64" : "w-16"
-      } bg-blue-900 text-white h-screen flex flex-col transition-all duration-300`}>
+      } bg-blue-900 text-white h-screen flex flex-col fixed top-0 left-0 bottom-0 transition-all duration-300 z-50`}>
       <div className="flex items-center justify-between h-16 px-4 bg-blue-800 shadow">
         {isSidebarVisible && (
           <h1 className="text-lg font-semibold whitespace-nowrap">Dashboard</h1>
