@@ -3,8 +3,7 @@ import { db, auth } from "../Firebase/firebaseConfig"; // Firebase configuration
 import { collection, addDoc } from "firebase/firestore"; // Firestore functions
 import { createUserWithEmailAndPassword } from "firebase/auth"; // Firebase Authentication
 import { FaUser, FaEnvelope } from "react-icons/fa"; // Only used icons
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import Swal from "sweetalert2"; // SweetAlert2 for notifications
 import Sidebar from "./Sidebar"; // Import Sidebar component
 
 const AdminRegistrationForm = () => {
@@ -29,13 +28,21 @@ const AdminRegistrationForm = () => {
 
     // Validation checks
     if (password !== confirmPassword) {
-      toast.error("Passwords do not match.");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Passwords do not match.",
+      });
       setLoading(false);
       return;
     }
 
     if (!firstName || !lastName || !email || !contactNumber || !address || !password || !confirmPassword) {
-      toast.error("Please fill in all fields.");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please fill in all fields.",
+      });
       setLoading(false);
       return;
     }
@@ -57,7 +64,12 @@ const AdminRegistrationForm = () => {
         uid: user.uid, // Link Firestore record with Authentication user
       });
 
-      toast.success("Admin registered successfully!");
+      Swal.fire({
+        icon: "success",
+        title: "Admin registered successfully!",
+        text: "The admin has been successfully registered.",
+      });
+
       setFirstName("");
       setLastName("");
       setEmail("");
@@ -67,9 +79,17 @@ const AdminRegistrationForm = () => {
       setConfirmPassword("");
     } catch (err) {
       if (err.code === "auth/email-already-in-use") {
-        toast.error("This email is already in use.");
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "This email is already in use.",
+        });
       } else {
-        toast.error("Failed to register admin. Please try again.");
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Failed to register admin. Please try again.",
+        });
       }
       console.error("Error during registration:", err);
     } finally {
@@ -220,9 +240,6 @@ const AdminRegistrationForm = () => {
           </div>
         </main>
       </div>
-
-      {/* Toast Notification */}
-      <ToastContainer />
     </div>
   );
 };

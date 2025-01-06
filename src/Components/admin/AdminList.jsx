@@ -2,10 +2,9 @@ import { collection, deleteDoc, doc, getDocs, updateDoc } from "firebase/firesto
 import { useEffect, useState } from "react";
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 import ReactPaginate from "react-paginate";
-import { toast } from "react-toastify"; 
-import 'react-toastify/dist/ReactToastify.css';
 import { db } from "../Firebase/firebaseConfig";
 import Sidebar from "./Sidebar";
+import Swal from 'sweetalert2'; // Import SweetAlert2
 
 const AdminList = () => {
   const [admins, setAdmins] = useState([]);
@@ -45,7 +44,11 @@ const AdminList = () => {
       } catch {
         if (isMounted) {
           setError("Failed to fetch admins. Please try again.");
-          toast.error("Error fetching data"); 
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Error fetching data',
+          });
         }
       } finally {
         if (isMounted) setLoading(false);
@@ -63,7 +66,7 @@ const AdminList = () => {
   }, [searchTerm]);
 
   useEffect(() => {
-    document.title = pageTitle; 
+    document.title = pageTitle;
   }, [pageTitle]);
 
   const filteredAdmins = admins.filter(
@@ -81,14 +84,25 @@ const AdminList = () => {
   const handlePageClick = ({ selected }) => setCurrentPage(selected);
 
   const deleteAdmin = async (adminId) => {
-    try {
-      await deleteDoc(doc(db, "admins", adminId));
-      setAdmins(admins.filter((admin) => admin.id !== adminId));
-      toast.success("Admin deleted successfully!");
-    } catch (error) {
-      toast.error("Error deleting admin");
-      console.error("Error deleting admin:", error);
-    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this action!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await deleteDoc(doc(db, "admins", adminId));
+          setAdmins(admins.filter((admin) => admin.id !== adminId));
+          Swal.fire('Deleted!', 'Admin has been deleted.', 'success');
+        } catch (error) {
+          Swal.fire('Error!', 'There was an error deleting the admin.', 'error');
+          console.error("Error deleting admin:", error);
+        }
+      }
+    });
   };
 
   const handleViewProfile = (admin) => {
@@ -117,7 +131,7 @@ const AdminList = () => {
 
   const handleSaveEdit = async () => {
     if (editForm.password !== editForm.confirmPassword) {
-      toast.error("Passwords do not match");
+      Swal.fire('Error!', 'Passwords do not match.', 'error');
       return;
     }
     try {
@@ -128,7 +142,7 @@ const AdminList = () => {
       setAdmins(admins.map((admin) =>
         admin.id === selectedAdmin.id ? { ...admin, ...editForm } : admin
       ));
-      toast.success("Admin updated successfully!");
+      Swal.fire('Success!', 'Admin updated successfully!', 'success');
       setSelectedAdmin(null);
       setModalType("");
       setEditForm({
@@ -141,7 +155,7 @@ const AdminList = () => {
         confirmPassword: "",
       });
     } catch (error) {
-      toast.error("Failed to update admin");
+      Swal.fire('Error!', 'Failed to update admin.', 'error');
       console.error("Error updating admin:", error);
     }
   };
@@ -320,39 +334,40 @@ const AdminList = () => {
                   <div className="flex justify-between">
                     <button
                       onClick={handleSaveEdit}
-                      className="px-4 py-2 bg-blue-600 text-white rounded-md"
+                      className="bg-blue-500 text-white py-2 px-4 rounded-md"
                     >
                       Save Changes
                     </button>
                     <button
                       onClick={closeModal}
-                      className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md"
+                      className="bg-gray-500 text-white py-2 px-4 rounded-md"
                     >
-                      Cancel
+                      Close
                     </button>
                   </div>
                 </div>
               ) : (
-                <div className="space-y-4">
-                  <div>
-                    <strong>First Name:</strong> {selectedAdmin.firstName}
+                <div>
+                  <div className="mb-4">
+                    <label className="block text-sm font-semibold text-gray-600">Full Name</label>
+                    <p className="text-gray-700">{selectedAdmin.firstName} {selectedAdmin.lastName}</p>
                   </div>
-                  <div>
-                    <strong>Last Name:</strong> {selectedAdmin.lastName}
+                  <div className="mb-4">
+                    <label className="block text-sm font-semibold text-gray-600">Email</label>
+                    <p className="text-gray-700">{selectedAdmin.email}</p>
                   </div>
-                  <div>
-                    <strong>Email:</strong> {selectedAdmin.email}
+                  <div className="mb-4">
+                    <label className="block text-sm font-semibold text-gray-600">Contact Number</label>
+                    <p className="text-gray-700">{selectedAdmin.contactNumber}</p>
                   </div>
-                  <div>
-                    <strong>Contact Number:</strong> {selectedAdmin.contactNumber}
+                  <div className="mb-4">
+                    <label className="block text-sm font-semibold text-gray-600">Address</label>
+                    <p className="text-gray-700">{selectedAdmin.address}</p>
                   </div>
-                  <div>
-                    <strong>Address:</strong> {selectedAdmin.address}
-                  </div>
-                  <div className="flex justify-end space-x-2">
+                  <div className="flex justify-between">
                     <button
                       onClick={closeModal}
-                      className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md"
+                      className="bg-gray-500 text-white py-2 px-4 rounded-md"
                     >
                       Close
                     </button>

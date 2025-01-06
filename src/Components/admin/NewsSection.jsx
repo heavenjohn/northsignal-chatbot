@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { db } from "../Firebase/firebaseConfig";
 import { collection, addDoc, deleteDoc, doc, onSnapshot, updateDoc } from "firebase/firestore";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import Swal from "sweetalert2";  // Import SweetAlert2
 import Sidebar from "./Sidebar"; // Import Sidebar component
 
 const AdminAnnouncements = () => {
@@ -38,28 +37,63 @@ const AdminAnnouncements = () => {
           imageUrl: newAnnouncementImageUrl.trim() || "",
           date: new Date().toISOString(),
         });
-        toast.success("Announcement added successfully!");
+        Swal.fire({
+          icon: "success",
+          title: "Announcement added successfully!",
+        });
         setNewAnnouncementTitle("");
         setNewAnnouncementText("");
         setNewAnnouncementImageUrl("");
       } catch (error) {
         console.error("Error adding announcement:", error);
-        toast.error("Error adding announcement!");
+        Swal.fire({
+          icon: "error",
+          title: "Error adding announcement!",
+        });
       }
     } else {
-      toast.warn("Please fill in the required fields.");
+      Swal.fire({
+        icon: "warning",
+        title: "Please fill in the required fields.",
+      });
     }
   };
 
   const deleteAnnouncement = async (id) => {
-    try {
-      await deleteDoc(doc(db, "announcements", id));
-      toast.success("Announcement deleted successfully!");
-    } catch (error) {
-      console.error("Error deleting announcement:", error);
-      toast.error("Error deleting announcement.");
+    // Show confirmation dialog
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this action!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!',
+    });
+  
+    if (result.isConfirmed) {
+      try {
+        // Proceed with the deletion
+        await deleteDoc(doc(db, "announcements", id));
+        Swal.fire({
+          icon: "success",
+          title: "Announcement deleted successfully!",
+        });
+      } catch (error) {
+        console.error("Error deleting announcement:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Error deleting announcement.",
+        });
+      }
+    } else {
+      Swal.fire({
+        icon: "info",
+        title: "Deletion cancelled.",
+      });
     }
   };
+  
 
   const openEditModal = (id, currentTitle, currentText, currentImageUrl) => {
     setEditAnnouncementId(id);
@@ -78,7 +112,10 @@ const AdminAnnouncements = () => {
           text: editedText.trim(),
           imageUrl: editedImageUrl.trim(),
         });
-        toast.success("Announcement updated successfully!");
+        Swal.fire({
+          icon: "success",
+          title: "Announcement updated successfully!",
+        });
         setIsEditModalOpen(false);
         setEditedTitle("");
         setEditedText("");
@@ -86,10 +123,16 @@ const AdminAnnouncements = () => {
         setEditAnnouncementId(null);
       } catch (error) {
         console.error("Error updating announcement:", error);
-        toast.error("Error updating announcement.");
+        Swal.fire({
+          icon: "error",
+          title: "Error updating announcement.",
+        });
       }
     } else {
-      toast.warn("Please fill in all the fields before saving.");
+      Swal.fire({
+        icon: "warning",
+        title: "Please fill in all the fields before saving.",
+      });
     }
   };
 
@@ -101,8 +144,6 @@ const AdminAnnouncements = () => {
       {/* Main Content */}
       <div className={`flex-1 p-6 ${isSidebarVisible ? 'ml-64' : 'ml-16'} transition-all`}>
         <h1 className="text-3xl font-bold text-gray-800 mb-6">Admin Announcements</h1>
-
-        <ToastContainer position="top-right" autoClose={3000} />
 
         {/* Add New Announcement Section */}
         <div className="bg-white p-6 rounded-lg shadow-lg mb-6">
