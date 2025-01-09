@@ -18,7 +18,6 @@ const initializeNlp = async () => {
   const manager = dock.get("nlp");
 
   // Function to reload corpus
-  console.log(fs.readFileSync("./nlp/corpus.json", "utf-8"));
   async function reloadCorpus() {
     console.log("Reloading corpus...");
 
@@ -38,7 +37,9 @@ const initializeNlp = async () => {
 };
 const retrained = async () => {
   const corpusData = JSON.parse(fs.readFileSync("./nlp/corpus.json", "utf-8"));
-  await nlpManager.addCorpus(corpusData);
+  console.log(nlpManager.settings.container.configurations);
+  nlpManager.settings.container.configurations.nlp.corpora = corpusData;
+
   await nlpManager.train();
 };
 

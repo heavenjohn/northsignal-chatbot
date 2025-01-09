@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const path = require("path");
 const cors = require("cors");
 const { initializeNlp, processText } = require("./nlp/manager.js");
 
@@ -24,6 +25,20 @@ const corsConfig = {
 app.use(cors(corsConfig));
 
 require("./routes")(app);
+
+// app.get("*", (req, res) =>
+//   res.sendFile(path.resolve(__dirname, "./", "view", "index.html"))
+// );
+
+// Serve the static files from the dist folder
+const distPath = path.join(__dirname, "view");
+app.use(express.static(distPath));
+
+// Fallback for React Router (if using client-side routing)
+app.get("*", (req, res) => {
+  res.sendFile(path.join(distPath, "index.html"));
+});
+
 app.post("/api/nlp", async (req, res) => {
   const { text } = req.body;
 
@@ -43,7 +58,7 @@ app.post("/api/nlp", async (req, res) => {
 });
 
 app.listen(PORT, async () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on Port ${PORT}`);
   try {
     await initializeNlp();
     console.log("NLP initialized");
