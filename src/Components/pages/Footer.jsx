@@ -3,93 +3,85 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <div className="bg-red-600 text-white py-2">
-      <div className="container mx-auto px-2">
+    <footer className="bg-red-600 text-white py-4">
+      <div className="container mx-auto px-4">
         {/* Emergency Hotlines Header */}
-        <h2 className="text-base md:text-lg font-bold mb-1">EMERGENCY HOTLINES</h2>
+        <h2 className="text-lg font-bold mb-4">EMERGENCY HOTLINES</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
           {/* Left Column: Hotlines and Services */}
-          <div className="text-xs">
+          <div className="text-sm">
             <ul className="space-y-1">
               <li className="flex justify-between">
-                <span>TAGUIG COMMAND CENTER</span>
-                <span>(02) 8789 3200</span>
+                <span>Taguig Bureau of Fire Protection</span>
+                <span>21 0919 / 883 70 704 / 883 70 919</span>
               </li>
               <li className="flex justify-between">
                 <span>TAGUIG RESCUE</span>
                 <span>0919 070 3112</span>
               </li>
               <li className="flex justify-between">
-                <span>DOCTOR-ON-CALL</span>
-                <span>0919 079 9112</span>
+                <span>Police Station 6</span>
+                <span>0975 713 8783</span>
               </li>
               <li className="flex justify-between">
-                <span>TAGUIG BUREAU OF FIRE PROTECTION</span>
-                <span>(02) 8837 0740</span>
+                <span>Telemedicine</span>
+                <span> 0961 234 0851</span>
               </li>
               <li className="flex justify-between">
-                <div className="text-left">
-                  <span>TRUNKLINE: Taguig City Hall Office</span><br />
-                  <span>SM Aura Satellite Office</span>
-                </div>
-                <div className="text-right">
-                  <span>(02) 8555 7800</span><br />
-                  <span>(02) 7795 9999</span>
-                </div>
+                <span>Health Center</span>
+                  <span>0961 234 0882</span>
               </li>
             </ul>
           </div>
 
           {/* Right Column: PNP and Other Services */}
-          <div className="text-xs">
+          <div className="text-sm">
             <ul className="space-y-1">
               <li className="flex justify-between">
-                <span>TAGUIG PNP</span>
-                <span>(02) 8642 3582</span>
+                <span>Barangay Hotline</span>
+                <span>(02) 9839298</span>
               </li>
               <li className="flex justify-between">
-                <span></span>
-                <span>0998 598 7932</span>
+                <span>Command Center</span>
+                <span>(02) 87893200</span>
               </li>
               <li className="flex justify-between">
-                <span>R.E.A.C.T.</span>
-                <span>(02) 8640 7006</span>
+                <span>Security Force</span>
+                <span>0962 419 4367</span>
               </li>
               <li className="flex justify-between">
-                <span>ROADSIDE EMERGENCY ASSISTANCE</span>
-                <span>0929 631 5924</span>
-              </li>
-              <li className="flex justify-between">
-                <span></span>
-                <span>0921 2780 0569</span>
+                <span>Alternate Security Contact</span>
+                <span>0936 460 0014</span>
               </li>
             </ul>
           </div>
         </div>
 
         {/* Social Media Icons */}
-        <div className="mt-2 flex justify-center space-x-2">
+        <div className="mt-6 flex justify-center space-x-4">
           <a href="https://www.facebook.com/people/Bagong-North-Signal/61553108162456/" target="_blank" rel="noreferrer" aria-label="Facebook">
-            <FaFacebook className="h-4 w-4" />
+            <FaFacebook className="h-5 w-5 hover:text-gray-200" />
           </a>
           <a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram">
-            <FaInstagram className="h-4 w-4" />
+            <FaInstagram className="h-5 w-5 hover:text-gray-200" />
           </a>
           <a href="https://twitter.com" target="_blank" rel="noreferrer" aria-label="Twitter">
-            <FaTwitter className="h-4 w-4" />
+            <FaTwitter className="h-5 w-5 hover:text-gray-200" />
           </a>
           <a href="https://youtube.com" target="_blank" rel="noreferrer" aria-label="YouTube">
-            <FaYoutube className="h-4 w-4" />
+            <FaYoutube className="h-5 w-5 hover:text-gray-200" />
           </a>
         </div>
 
         {/* Footer Text */}
-        <div className="mt-2 text-center border-t border-white pt-1 text-xs">
+        <div className="mt-6 text-center border-t border-white pt-4 text-xs">
           <p>2024 © | North Signal</p>
-          <p> <Link to="/security">Policy</Link> | Current Version: 0.1.5</p>
+          <p>
+            <Link to="/security" className="hover:underline">Policy</Link> | Current Version: 0.1.5
+          </p>
         </div>
       </div>
-    </div>
+    </footer>
   );
 };
 

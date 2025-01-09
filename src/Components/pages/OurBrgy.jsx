@@ -8,16 +8,16 @@ const HistorySection = () => {
     <div className="mb-16">
         <Navbar />
       </div>
-      <section className="py-5 px-4 md:px-16 bg-white text-gray-900">
-        <div className="container mx-auto">
           {/* Section Title */}
-          <h2 className="text-4xl font-extrabold text-center mb-8 text-gray-800">
-            Our Barangay
-          </h2>
-          <h3 className="text-3xl font-semibold text-center mb-6">
-            History of the Barangay
-          </h3>
-
+          <section className="bg-yellow text-black py-5">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-4xl sm:text-5xl font-bold mb-4">Our Barangay</h1>
+          <p className="text-base sm:text-lg">
+          Our barangay is a united and vibrant community committed to growth, safety, and well-being. Guided by dedicated leaders, we strive to provide quality services, promote harmony, and foster development for all residents.          </p>
+        </div>
+      </section>
+      <section className="py-5 px-4 md:px-16 bg-white text-gray-900">
+      <div className="container mx-auto">
           {/* Content Area */}
           <div className="grid md:grid-cols-2 gap-12">
             <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:bg-yellow transition-all duration-300">

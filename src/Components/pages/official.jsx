@@ -1,49 +1,56 @@
 import { FaFacebook, FaTwitter } from 'react-icons/fa';
+import img2 from "../../assets/officials/1.png";
+import img3 from "../../assets/officials/2.png";
+import img4 from "../../assets/officials/3.png";
+import img5 from "../../assets/officials/4.png";
+import img6 from "../../assets/officials/5.png";
+import img7 from "../../assets/officials/6.png";
+import img8 from "../../assets/officials/7.png";
+import img9 from "../../assets/officials/8.png";
+import img1 from "../../assets/officials/img1.png";
+import Chatbot from '../Chatbot/Chatbot';
 import Navbar from '../Navbar';
 import Footer from './Footer';
-import Chatbot from '../Chatbot/Chatbot';
-import img1 from "../../assets/officials/img1.png"
-
 const councilors = [
   {
-    name: 'Danilo Castro',
+    name: 'Hon. Danilo Castro',
     title: 'BRGY. CAPITAN',
-    img: 'https://via.placeholder.com/150',
+    img: img2,
   },
   {
-    name: 'Jimmy Gomez',
+    name: 'Hon. Ricardo T. Jordan Jr.',
     title: 'KAGAWAD',
-    img: 'https://via.placeholder.com/150',
+    img: img3,
   },
   {
-    name: 'Jojo Quijano',
+    name: 'Hon.Joseph D. Quijano',
     title: 'KAGAWAD',
-    img: 'https://via.placeholder.com/150',
+    img: img4,
   },
   {
-    name: 'Ric Jordan',
+    name: 'Hon. Jimmy A. Gomez',
     title: 'KAGAWAD',
-    img: 'https://via.placeholder.com/150',
+    img: img5,
   },
   {
-    name: 'Jonas Barca',
+    name: 'Hon. Jonas T. Barca',
     title: 'KAGAWAD',
-    img: 'https://via.placeholder.com/150',
+    img: img6,
   },
   {
-    name: 'Yolly Velasco',
+    name: 'Hon. Yolanda C. Velasco',
     title: 'KAGAWAD',
-    img: 'https://via.placeholder.com/150',
+    img: img7,
   },
   {
-    name: 'Ronald Ramirez',
+    name: 'Hon. Ronald M. Ramirez',
     title: 'KAGAWAD',
-    img: 'https://via.placeholder.com/150',
+    img: img8,
   },
   {
-    name: 'Irene Ingco',
+    name: 'Hon. Regina Sta. Maria Ingco',
     title: 'KAGAWAD',
-    img: 'https://via.placeholder.com/150',
+    img: img9,
   },
 ];
 
@@ -54,17 +61,14 @@ const CityOfficials = () => {
       <div className="mb-16">
         <Navbar />
       </div>
-        <div className='py-5 px-4 md:px-16'>
-          <div className='container max-auto'>
-        <h2 className="text-4xl font-extrabold text-center mb-8 text-gray-800">
-            Our Barangay Leaders 
-          </h2>
-          <h3 className="text-3xl font-semibold text-center mb-6">
-             Barangay Officials
-          </h3>
+      <section className="bg-primary text-white py-5 mb-5">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-4xl sm:text-5xl font-bold mb-4">Our Officials</h1>
+          <p className="text-base sm:text-lg">
+          Barangay officials are dedicated leaders who serve the community by ensuring peace, order, and efficient delivery of services. They work to address local needs and foster community development.
+          </p>
         </div>
-
-          </div>
+      </section>
       {/* Mayor Section */}
       <div className="max-w-5xl mx-auto bg-white shadow-lg p-6 rounded-lg mb-10">
 

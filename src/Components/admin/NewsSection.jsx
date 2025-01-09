@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { addDoc, collection, deleteDoc, doc, onSnapshot, updateDoc } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import Swal from "sweetalert2"; // Import SweetAlert2
 import { db } from "../Firebase/firebaseConfig";
-import { collection, addDoc, deleteDoc, doc, onSnapshot, updateDoc } from "firebase/firestore";
-import Swal from "sweetalert2";  // Import SweetAlert2
 import Sidebar from "./Sidebar"; // Import Sidebar component
 
 const AdminAnnouncements = () => {
@@ -16,7 +16,6 @@ const AdminAnnouncements = () => {
   const [editedText, setEditedText] = useState("");
   const [editedImageUrl, setEditedImageUrl] = useState("");
 
-  // Function to set the page title
   const setPageTitle = (title) => {
     document.title = title;
   };
@@ -60,20 +59,18 @@ const AdminAnnouncements = () => {
   };
 
   const deleteAnnouncement = async (id) => {
-    // Show confirmation dialog
     const result = await Swal.fire({
-      title: 'Are you sure?',
+      title: "Are you sure?",
       text: "You won't be able to revert this action!",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Yes, delete it!',
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
     });
-  
+
     if (result.isConfirmed) {
       try {
-        // Proceed with the deletion
         await deleteDoc(doc(db, "announcements", id));
         Swal.fire({
           icon: "success",
@@ -93,7 +90,6 @@ const AdminAnnouncements = () => {
       });
     }
   };
-  
 
   const openEditModal = (id, currentTitle, currentText, currentImageUrl) => {
     setEditAnnouncementId(id);
@@ -138,14 +134,11 @@ const AdminAnnouncements = () => {
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-      {/* Sidebar component */}
       <Sidebar isSidebarVisible={isSidebarVisible} setIsSidebarVisible={setIsSidebarVisible} setPageTitle={setPageTitle} />
 
-      {/* Main Content */}
-      <div className={`flex-1 p-6 ${isSidebarVisible ? 'ml-64' : 'ml-16'} transition-all`}>
+      <div className={`flex-1 p-6 ${isSidebarVisible ? "ml-64" : "ml-16"} transition-all`}>
         <h1 className="text-3xl font-bold text-gray-800 mb-6">Admin Announcements</h1>
 
-        {/* Add New Announcement Section */}
         <div className="bg-white p-6 rounded-lg shadow-lg mb-6">
           <h2 className="text-xl font-semibold text-gray-700 mb-4">Add New Announcement</h2>
           <div className="flex flex-col gap-4">
@@ -171,14 +164,13 @@ const AdminAnnouncements = () => {
             />
             <button
               onClick={addAnnouncement}
-              className="bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition duration-300"
+              className="bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-700 focus:ring-2 focus:ring-blue-400 focus:outline-none transition duration-300"
             >
               Add Announcement
             </button>
           </div>
         </div>
 
-        {/* Announcements List */}
         <div className="bg-white p-6 rounded-lg shadow-lg">
           <h2 className="text-xl font-semibold text-gray-700 mb-4">All Announcements</h2>
           {announcements.length > 0 ? (
@@ -207,13 +199,13 @@ const AdminAnnouncements = () => {
                           announcement.imageUrl
                         )
                       }
-                      className="text-blue-600 hover:underline"
+                     className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:ring-2 focus:ring-blue-400 focus:outline-none transition duration-300"
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => deleteAnnouncement(announcement.id)}
-                      className="text-red-600 hover:underline"
+                      className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-700 focus:ring-2 focus:ring-red-400 focus:outline-none transition duration-300"
                     >
                       Delete
                     </button>
@@ -227,7 +219,6 @@ const AdminAnnouncements = () => {
         </div>
       </div>
 
-      {/* Edit Announcement Modal */}
       {isEditModalOpen && (
         <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 w-full max-w-lg shadow-lg">
@@ -255,13 +246,13 @@ const AdminAnnouncements = () => {
             <div className="flex justify-end gap-4">
               <button
                 onClick={() => setIsEditModalOpen(false)}
-                className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-700"
+                className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-700 focus:ring-2 focus:ring-gray-300 focus:outline-none transition duration-300"
               >
                 Cancel
               </button>
               <button
                 onClick={saveEditedAnnouncement}
-                className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+                className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:ring-2 focus:ring-blue-400 focus:outline-none transition duration-300"
               >
                 Save
               </button>
