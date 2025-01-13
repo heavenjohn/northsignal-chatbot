@@ -37,8 +37,9 @@ const initializeNlp = async () => {
 };
 const retrained = async () => {
   const corpusData = JSON.parse(fs.readFileSync("./nlp/corpus.json", "utf-8"));
-  console.log(nlpManager.settings.container.configurations);
-  nlpManager.settings.container.configurations.nlp.corpora = corpusData;
+  nlpManager.settings.container.configurations.nlp.corpora = []; // Clear past data
+  nlpManager.addCorpus(corpusData);
+  // nlpManager.settings.container.configurations.nlp.corpora = corpusData;
 
   await nlpManager.train();
 };
